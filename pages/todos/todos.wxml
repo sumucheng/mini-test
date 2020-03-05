@@ -1,0 +1,8 @@
+<!--pages/test/test.wxml-->
+<view>
+  <input value="{{newTodo}}" bindconfirm="handleConfirm" class="todo-input" maxlength="20"  placeholder="请输入"></input>
+</view>
+<view wx:for="{{processingTodoList}}" wx-for-item="item" wx:key="id" class="todoItem">
+  <view bindtap="handleComplete" id="{{item.id}}" class="completeButton {{item.completed?'completed':''}}"></view>
+  <text>{{item.value}}</text>
+</view>

@@ -1,4 +1,4 @@
-// pages/test/test.js
+// pages/completed/completed.js
 Page({
 
   /**

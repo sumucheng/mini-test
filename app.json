@@ -1,14 +1,30 @@
 {
   "pages": [
-    "pages/test/test",
+    "pages/todos/todos",
+    "pages/completed/completed",
     "pages/index/index",
-    "pages/logs/logs" 
+    "components/list/list"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "番茄专注",
+    "navigationBarTitleText": "TODO",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#aaa",
+    "selectedColor": "#333",
+    "list": [
+      {
+        "pagePath": "pages/todos/todos",
+        "text": "todos"
+       
+      },
+      {
+        "pagePath": "pages/completed/completed",
+        "text": "completed"
+      }
+    ]
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

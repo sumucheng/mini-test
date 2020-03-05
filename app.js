@@ -1,10 +1,11 @@
 //app.js
 App({
   onLaunch: function () {
+    let todoList = wx.getStorageSync('todoList') || []
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    // var logs = wx.getStorageSync('logs') || []
+    // logs.unshift(Date.now())
+    // wx.setStorageSync('logs', logs)
 
     // 登录
     wx.login({
@@ -34,6 +35,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    todoList:Array.from(wx.getStorageSync('todoList') || [])
   }
 })

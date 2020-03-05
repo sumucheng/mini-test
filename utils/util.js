@@ -14,6 +14,14 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-module.exports = {
-  formatTime: formatTime
+const createId = () => {
+  let id = wx.getStorageSync('maxId') ||0
+  id += 1
+  wx.setStorageSync("maxId", id)
+  return id
+}
+
+export {
+  formatTime,
+  createId
 }
