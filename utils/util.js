@@ -4,9 +4,7 @@ const formatTime = date => {
   const day = date.getDate()
   const hour = date.getHours()
   const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':') + ' 完成'
 }
 
 const formatNumber = n => {
@@ -47,14 +45,13 @@ const initTodoList = () => {
       completed: false,
       time: new Date(),
       completedTime: null
-    }
-    ,
+    },
     {
       tag: '购物清单',
       id: -4,
       value: '已完成',
       completed: true,
-      time: new Date(2020,0,0),
+      time: new Date(2020, 0, 0),
       completedTime: new Date(2020, 0, 0)
     }
   ]

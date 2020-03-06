@@ -1,8 +1,8 @@
 <!--pages/completed/completed.wxml-->
-<view wx:for="{{list}}" wx:for-item="item" wx:key="id">
-  <view class="tagTitle">
-    <text>{{item.completedTime.getDate()}}</text>
+<view wx:for="{{list}}" wx:for-item="item" wx:key="id" class="item">
+  <view class="title">
+    <text>{{item.completedTime}}</text>
     <view bindtap="deleteTodoItem" id="{{item.tag}}">×</view>
   </view>
-  <text>{{item.value}}</text>
+  <view class="text">{{item.value}}</view>
 </view>
