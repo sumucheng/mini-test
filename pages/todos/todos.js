@@ -11,12 +11,14 @@ Page({
     displayAddTodoItem: false,
     displayAddTag: false
   },
-  comfirm: function(e) {
+  comfirmAddTodo: function(e) {
     app.globalData.todoList.unshift({
       tag: this.data.tag,
       id: createId(),
       value: e.detail,
-      completed: false
+      completed: false,
+      time: new Date(),
+      completedTime: null
     })
     this.updateTodoList()
     wx.setStorageSync('todoList', app.globalData.todoList)
@@ -24,38 +26,64 @@ Page({
       displayAddTodoItem: false
     })
   },
-  cancel: function(e) {
+  cancelAddTodo: function(e) {
     this.setData({
       displayAddTodoItem: false
     })
   },
-
+  comfirmAddTag: function(e) {
+    app.globalData.tags.push(e.detail)
+    wx.setStorageSync('tags', app.globalData.tags)
+    this.setData({
+      displayAddTag: false,
+      todoListByTag: [...this.data.todoListByTag, {
+        tag: e.detail,
+        data: []
+      }]
+    })
+  },
+  cancelAddTag: function(e) {
+    this.setData({
+      displayAddTag: false
+    })
+  },
   addTodoItem: function(e) {
     this.setData({
       displayAddTodoItem: true,
       tag: e.target.id
     })
   },
+  addTag: function(e) {
+    this.setData({
+      displayAddTag: true,
+    })
+  },
 
-  handleComplete: function(e) {
-    app.globalData.todoList.find(i => i.id === Number(e.target.id)).completed = true
+  toggle: function(e) {
+    let item = app.globalData.todoList.find(i => i.id === Number(e.currentTarget.id))
+    if (item.completed) {
+      item.completed = false
+      item.completedTime = null
+    } else {
+      item.completed = true
+      item.completedTime = new Date()
+    }
+    this.updateTodoList()
     wx.setStorageSync('todoList', app.globalData.todoList)
   },
   onLoad: function(options) {
     this.updateTodoList()
   },
+
   updateTodoList: function() {
-    const todoList = app.globalData.todoList
-    let hash = {}
-    for (let i of todoList) {
-      if (i.tag in hash) hash[i.tag].unshift(i)
-      else hash[i.tag] = [i]
-    }
+    let todoList = app.globalData.todoList.filter(
+      i => (!i.completed) || (i.completed && new Date(i.completedTime).getDate() === new Date().getDate())
+    )
     let result = []
-    for (let tag in hash) {
+    for (let tag of app.globalData.tags) {
       result.push({
         tag: tag,
-        data: hash[tag]
+        data: todoList.filter(i => i.tag === tag)
       })
     }
     this.setData({

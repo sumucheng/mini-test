@@ -1,18 +1,19 @@
 <!--pages/test/test.wxml-->
-<!-- <view>
-  <input value="{{newTodo}}" bindconfirm="handleConfirm" class="todo-input" maxlength="20" placeholder="请输入"></input>
-</view> -->
 
 <view wx:for="{{todoListByTag}}" wx:for-item="items" wx:key="tag" class="tag">
-  <view>
+  <view class="tagTitle">
     <text>{{items.tag}}</text>
-    <button size="mini" bindtap="addTodoItem" id="{{items.tag}}">+</button>
+    <view bindtap="addTodoItem" id="{{items.tag}}" class="addTodoItem">+</view>
   </view>
-  <view wx:for="{{items.data}}" wx:for-item="item" wx:key="id" class="todoItem">
-    <view bindtap="handleComplete" id="{{item.id}}" class="completeButton {{item.completed?'completed':''}}"></view>
+  <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="id" class="todoItem {{item.completed&&'completed'}}" id="{{item.id}}">
+    <view  class="toggleButton">
+      <icon wx:if="{{item.completed}}" type="success"></icon>
+    </view>
     <text>{{item.value}}</text>
   </view>
 </view>
 <button bindtap="addTag">+</button>
 
-<addTodoItem placeholder="待办名称" visible="{{displayAddTodoItem}}" bindconfirm="comfirm" bindcancel="cancel"></addTodoItem>
+<dialog placeholder="待办名称" visible="{{displayAddTodoItem}}" bindconfirm="comfirmAddTodo" bindcancel="cancelAddTodo"></dialog>
+
+<dialog placeholder="标签名称" visible="{{displayAddTag}}" bindconfirm="comfirmAddTag" bindcancel="cancelAddTag"></dialog>

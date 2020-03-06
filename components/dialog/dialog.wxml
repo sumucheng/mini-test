@@ -1,0 +1,9 @@
+<!--components/addTodoItem/addTodoItem.wxml-->
+<view wx:if="{{visible}}" class="wrapper">
+<view class="container">
+  <button size="mini" bindtap="cancel">取消</button>
+  <input auto-focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" maxlength="20" placeholder="{{placeholder}}"></input>
+  <button size="mini" bindtap="confirm">确定</button>
+</view>
+
+</view>

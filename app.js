@@ -1,9 +1,10 @@
 //app.js
-import { initTodoList} from './utils/util.js'
+import { initTodoList, initTags} from './utils/util.js'
 App({
   globalData: {
     userInfo: null,
-    todoList: Array.from(wx.getStorageSync('todoList') || initTodoList() )
+    todoList: Array.from(wx.getStorageSync('todoList') || initTodoList() ),
+    tags: Array.from(wx.getStorageSync('tags') || initTags())
   },
   onLaunch: function() {
     // 登录
