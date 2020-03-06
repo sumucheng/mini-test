@@ -1,12 +1,11 @@
 //app.js
+import { initTodoList} from './utils/util.js'
 App({
-  onLaunch: function () {
-    let todoList = wx.getStorageSync('todoList') || []
-    // 展示本地存储能力
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
-
+  globalData: {
+    userInfo: null,
+    todoList: Array.from(wx.getStorageSync('todoList') || initTodoList() )
+  },
+  onLaunch: function() {
     // 登录
     wx.login({
       success: res => {
@@ -34,8 +33,5 @@ App({
       }
     })
   },
-  globalData: {
-    userInfo: null,
-    todoList:Array.from(wx.getStorageSync('todoList') || [])
-  }
+
 })

@@ -6,34 +6,60 @@ const app = getApp()
 
 Page({
   data: {
-    newTodo: '',
-    processingTodoList: [],
+    tag: '',
+    todoListByTag: [],
+    displayAddTodoItem: false,
+    displayAddTag: false
   },
-  handleConfirm: function(e) {
-    if(e.detail.value.trim()==='') return 
+  comfirm: function(e) {
     app.globalData.todoList.unshift({
+      tag: this.data.tag,
       id: createId(),
-      value: e.detail.value.trim(),
+      value: e.detail,
       completed: false
     })
+    this.updateTodoList()
+    wx.setStorageSync('todoList', app.globalData.todoList)
     this.setData({
-      newTodo: '',
+      displayAddTodoItem: false
     })
-    this.saveList()
   },
+  cancel: function(e) {
+    this.setData({
+      displayAddTodoItem: false
+    })
+  },
+
+  addTodoItem: function(e) {
+    this.setData({
+      displayAddTodoItem: true,
+      tag: e.target.id
+    })
+  },
+
   handleComplete: function(e) {
     app.globalData.todoList.find(i => i.id === Number(e.target.id)).completed = true
-    this.saveList()
-  },
-  saveList: function() {
-    this.setData({
-      processingTodoList: app.globalData.todoList.filter(i => i.completed === false)
-    })
     wx.setStorageSync('todoList', app.globalData.todoList)
   },
   onLoad: function(options) {
+    this.updateTodoList()
+  },
+  updateTodoList: function() {
+    const todoList = app.globalData.todoList
+    let hash = {}
+    for (let i of todoList) {
+      if (i.tag in hash) hash[i.tag].unshift(i)
+      else hash[i.tag] = [i]
+    }
+    let result = []
+    for (let tag in hash) {
+      result.push({
+        tag: tag,
+        data: hash[tag]
+      })
+    }
     this.setData({
-      processingTodoList: app.globalData.todoList.filter(i => i.completed === false)
+      todoListByTag: result
     })
   }
 })

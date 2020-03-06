@@ -2,8 +2,7 @@
   "pages": [
     "pages/todos/todos",
     "pages/completed/completed",
-    "pages/index/index",
-    "components/list/list"
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,12 +16,16 @@
     "list": [
       {
         "pagePath": "pages/todos/todos",
-        "text": "todos"
+        "text": "待办"
        
       },
       {
         "pagePath": "pages/completed/completed",
-        "text": "completed"
+        "text": "已完成"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的"
       }
     ]
   },

@@ -15,13 +15,36 @@ const formatNumber = n => {
 }
 
 const createId = () => {
-  let id = wx.getStorageSync('maxId') ||0
+  let id = wx.getStorageSync('maxId') || 0
   id += 1
   wx.setStorageSync("maxId", id)
   return id
 }
 
+const initTodoList = () => {
+  return [{
+      tag: '日常',
+      id: -1,
+      value: '取快递',
+      completed: false
+    },
+    {
+      tag: '日常',
+      id: -2,
+      value: '买早饭',
+      completed: false
+    },
+    {
+      tag: '购物清单',
+      id: -3,
+      value: '鸡蛋',
+      completed: false
+    }
+  ]
+}
+
 export {
   formatTime,
-  createId
+  createId,
+  initTodoList
 }

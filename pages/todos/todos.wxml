@@ -1,8 +1,18 @@
 <!--pages/test/test.wxml-->
-<view>
-  <input value="{{newTodo}}" bindconfirm="handleConfirm" class="todo-input" maxlength="20"  placeholder="请输入"></input>
+<!-- <view>
+  <input value="{{newTodo}}" bindconfirm="handleConfirm" class="todo-input" maxlength="20" placeholder="请输入"></input>
+</view> -->
+
+<view wx:for="{{todoListByTag}}" wx:for-item="items" wx:key="tag" class="tag">
+  <view>
+    <text>{{items.tag}}</text>
+    <button size="mini" bindtap="addTodoItem" id="{{items.tag}}">+</button>
+  </view>
+  <view wx:for="{{items.data}}" wx:for-item="item" wx:key="id" class="todoItem">
+    <view bindtap="handleComplete" id="{{item.id}}" class="completeButton {{item.completed?'completed':''}}"></view>
+    <text>{{item.value}}</text>
+  </view>
 </view>
-<view wx:for="{{processingTodoList}}" wx-for-item="item" wx:key="id" class="todoItem">
-  <view bindtap="handleComplete" id="{{item.id}}" class="completeButton {{item.completed?'completed':''}}"></view>
-  <text>{{item.value}}</text>
-</view>
+<button bindtap="addTag">+</button>
+
+<addTodoItem placeholder="待办名称" visible="{{displayAddTodoItem}}" bindconfirm="comfirm" bindcancel="cancel"></addTodoItem>
