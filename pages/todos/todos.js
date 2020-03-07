@@ -8,6 +8,8 @@ Page({
   data: {
     tag: '',
     todoListByTag: [],
+    percentText:'',
+    percent: 0,
     displayAddTodoItem: false,
     displayAddTag: false
   },
@@ -79,6 +81,7 @@ Page({
     let todoList = app.globalData.todoList.filter(
       i => (!i.completed) || (i.completed && new Date(i.completedTime).getDate() === new Date().getDate())
     )
+    let completedTodos=todoList.filter(i=>i.completed)
     let result = []
     for (let tag of app.globalData.tags) {
       result.push({
@@ -87,7 +90,9 @@ Page({
       })
     }
     this.setData({
-      todoListByTag: result
+      todoListByTag: result,
+      percentText: completedTodos.length + ' / ' + todoList.length,
+      percent:completedTodos.length/todoList.length*100
     })
   }
 })

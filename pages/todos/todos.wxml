@@ -1,4 +1,8 @@
 <!--pages/test/test.wxml-->
+<view class="header">
+  <view class="percentText">{{percentText}}</view>
+  <progress percent="{{percent}}" active="true" active-mode="forwards" duration="5" />
+</view>
 
 <view wx:for="{{todoListByTag}}" wx:for-item="items" wx:key="tag" class="tag">
   <view class="tagTitle">
@@ -6,9 +10,10 @@
     <view bindtap="addTodoItem" id="{{items.tag}}" class="addTodoItem">+</view>
   </view>
   <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="id" class="todoItem {{item.completed&&'completed'}}" id="{{item.id}}">
-    <view  class="toggleButton">
+    <view class="toggleButton">
       <icon wx:if="{{item.completed}}" type="success"></icon>
     </view>
+    <!-- <switch type="checkbox" checked="{{item.completed}}" bindchange="switchChange"></switch> -->
     <text>{{item.value}}</text>
   </view>
 </view>
