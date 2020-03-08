@@ -10,13 +10,23 @@ Page({
     todoListByTag: [],
     percentText: '',
     percent: 0,
-    boxY: 0,
     display: {
       addTodoItem: false,
       addTag: false,
       more: false
     },
+    tooltipShow: false,
+    action: [{
+        text: '归档已完成的待办',
+        value: 'archiveTodo'
+      },
+      {
+        text: '删除标签',
+        value: 'deleteTag'
+      }
+    ],
   },
+
   comfirmAddTodo: function(e) {
     app.globalData.todoList.unshift({
       tag: this.data.selectedTag,
@@ -31,6 +41,7 @@ Page({
     this.hideView()
   },
   comfirmAddTag: function(e) {
+    if (app.globalData.tags.find(i => i === e.detail)) return
     app.globalData.tags.push(e.detail)
     wx.setStorageSync('tags', app.globalData.tags)
     this.hideView()
@@ -51,11 +62,26 @@ Page({
     this.displayView('addTag')
   },
   more: function(e) {
+    // wx.showActionSheet({
+    //   itemList: ['1', '2'],
+    //   success(res) {
+    //     let index = res.tapIndex
+    //     console.log(this)
+    //     if (index === 0) this.archiveTodo()
+    //     else if (index === 1) this.deleteTag()
+    //   },
+    // })
     this.displayView('more')
+    wx.hideTabBar({})
     this.setData({
-      boxY: e.detail.y,
       selectedTag: e.currentTarget.id
     })
+  },
+  moreAction: function(e) {
+    console.log(e)
+    if (e.detail.value === 'archiveTodo') this.archiveTodo()
+    else if (e.detail.value === 'deleteTag') this.deleteTag()
+    
   },
   deleteTag: function(e) {
     const selectedTag = this.data.selectedTag
@@ -128,6 +154,9 @@ Page({
         more: false
       },
       tag: '',
+    })
+    wx.showTabBar({
+      
     })
   }
 })
