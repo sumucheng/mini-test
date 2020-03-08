@@ -21,16 +21,16 @@ const createId = () => {
 const initTags = () => {
   return ['日常', '购物清单']
 }
-// const initArchiveList = () => {
-//   return [{
-//     tag: '购物清单',
-//     id: -4,
-//     value: '已完成',
-//     completed: true,
-//     time: new Date(2020, 0, 0),
-//     completedTime: new Date(2020, 0, 0)
-//   }]
-// }
+const initArchiveList = () => {
+  return [{
+    tag: '购物清单',
+    id: -4,
+    value: '已完成',
+    completed: true,
+    time: new Date(2020, 0, 0),
+    completedTime: new Date(2020, 0, 0)
+  }]
+}
 const initTodoList = () => {
   return [{
     tag: '日常',

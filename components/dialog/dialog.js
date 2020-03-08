@@ -31,6 +31,9 @@ Component({
       })
     },
     cancel: function() {
+      this.setData({
+        value: ''
+      })
       this.triggerEvent('cancel')
     },
     watchValue(e) {

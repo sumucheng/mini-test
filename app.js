@@ -8,20 +8,13 @@ App({
   globalData: {
     userInfo: null,
     todoList: Array.from(wx.getStorageSync('todoList') || initTodoList()).map(i => {
-      if (i.completed && new Date(i.completedTime).getDate() !== new Date().getDate()) i.archive = true
-      else i.archive = false
+      if(i.archive) return i
+      i.archive = (i.completed && new Date(i.completedTime).getDate() !== new Date().getDate())
       return i
     }),
-    // archiveList: Array.from(wx.getStorageSync('archiveList') || initArchiveList()),
     tags: Array.from(wx.getStorageSync('tags') || initTags())
   },
   onLaunch: function() {
-    // this.globalData.todoList = app.globalData.todoList.filter(
-    //   i => (!i.completed) || (i.completed && new Date(i.completedTime).getDate() === new Date().getDate())
-    // )
-    // this.globalData.archiveList = this.globalData.archiveList.concat(app.globalData.todoList.filter(
-    //   i => (i.completed && new Date(i.completedTime).getDate() !== new Date().getDate())
-    // ))
     wx.setStorageSync('todoList', this.globalData.todoList)
     // wx.setStorageSync('archiveList', this.globalData.archiveList)
     // 登录

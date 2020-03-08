@@ -6,29 +6,20 @@ const app = getApp()
 
 Page({
   data: {
-    tag: '',
+    selectedTag: '',
     todoListByTag: [],
     percentText: '',
     percent: 0,
+    boxY: 0,
     display: {
       addTodoItem: false,
       addTag: false,
-      more: false,
-      editTag: false
+      more: false
     },
-    range: [{
-      text: '编辑',
-      method: 'editTag'
-    }, {
-      text: '删除',
-      method: 'deleteTag'
-    }],
-    boxY: 0,
-    moreTag: ''
   },
   comfirmAddTodo: function(e) {
     app.globalData.todoList.unshift({
-      tag: this.data.tag,
+      tag: this.data.selectedTag,
       id: createId(),
       value: e.detail,
       completed: false,
@@ -53,7 +44,7 @@ Page({
   addTodoItem: function(e) {
     this.displayView('addTodoItem')
     this.setData({
-      tag: e.target.id
+      selectedTag: e.target.id
     })
   },
   addTag: function(e) {
@@ -63,25 +54,28 @@ Page({
     this.displayView('more')
     this.setData({
       boxY: e.detail.y,
-      moreTag: e.currentTarget.id
+      selectedTag: e.currentTarget.id
     })
   },
-  editTag: function(e) {
-    this.hideView()
-    this.displayView('editTag')
-  },
-  comfirmEditTag: function(e) {
-    //....
-    this.hideView()
-  },
-
   deleteTag: function(e) {
-    let index = app.globalData.tags.findIndex(i => i === this.data.moreTag)
+    const selectedTag = this.data.selectedTag
+    let index = app.globalData.tags.findIndex(i => i === selectedTag)
     app.globalData.tags.splice(index, 1)
     wx.setStorageSync('tags', app.globalData.tags)
     app.globalData.todoList = app.globalData.todoList.filter(
-      i =>  (i.tag !== this.data.moreTag) || (i.tag === this.data.moreTag && i.archive)
+      i => (i.tag !== selectedTag) || (i.tag === selectedTag && i.archive)
     )
+    wx.setStorageSync('todoList', app.globalData.todoList)
+    this.updateTodoList()
+    this.hideView()
+  },
+
+  archiveTodo: function(e) {
+    app.globalData.todoList = app.globalData.todoList.map(i => {
+      if (i.archive) return i
+      i.archive = (i.completed && i.tag === this.data.selectedTag)
+      return i
+    })
     wx.setStorageSync('todoList', app.globalData.todoList)
     this.updateTodoList()
     this.hideView()
@@ -131,9 +125,9 @@ Page({
       display: {
         addTodoItem: false,
         addTag: false,
-        more: false,
-        editTag: false
-      }
+        more: false
+      },
+      tag: '',
     })
   }
 })

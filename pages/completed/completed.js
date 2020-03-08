@@ -13,13 +13,11 @@ Page({
     wx.setStorageSync('todoList', app.globalData.todoList)
     this.updateList()
   },
-  onLoad: function(options) {
-   this.updateList()
+  onShow: function() {
+    this.updateList()
   },
-  updateList(){
-    let completedList = app.globalData.todoList.filter(
-      i => i.completed && new Date(i.completedTime).getDate() !== new Date().getDate()
-    )
+  updateList() {
+    let completedList = app.globalData.todoList.filter(i => i.archive)
     this.setData({
       list: completedList.map(i => {
         i.completedTimeText = formatTime(new Date(i.completedTime))

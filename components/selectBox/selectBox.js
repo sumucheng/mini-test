@@ -2,27 +2,38 @@
 Component({
 
   properties: {
-    range: {
-      type: Array,
-      value: []
-    },
+    // range: {
+    //   type: Array,
+    //   value: []
+    // },
     visible: {
       type: Boolean,
       value: false
     },
-    boxY:{
-      type:Number,
-      value:0
+    boxY: {
+      type: Number,
+      value: 0
     }
   },
+  data: {
+    range: [{
+        text: '归档已完成的待办',
+        method: 'archiveTodo'
+      },
+      {
+        text: '删除标签',
+        method: 'deleteTag'
+      }
+    ],
+  },
   methods: {
-    cancel: function () {
+    cancel: function() {
       this.triggerEvent('cancel')
     },
-    editTag:function(e){
-      this.triggerEvent('edittag', e.currentTarget.id)
+    archiveTodo: function(e) {
+      this.triggerEvent('archivetodo', e.currentTarget.id)
     },
-    deleteTag:function(e){
+    deleteTag: function(e) {
       this.triggerEvent('deletetag', e.currentTarget.id)
     }
   }

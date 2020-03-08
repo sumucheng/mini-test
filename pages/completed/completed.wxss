@@ -4,6 +4,7 @@
   border: 1rpx solid #eee;
   margin: 20rpx;
   border-radius: 12rpx;
+  overflow: hidden;
 }
 
 .title {
