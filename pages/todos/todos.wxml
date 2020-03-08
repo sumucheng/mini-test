@@ -1,24 +1,29 @@
 <!--pages/test/test.wxml-->
 <view class="header">
   <view class="percentText">{{percentText}}</view>
-  <progress percent="{{percent}}" active="true" active-mode="forwards" duration="5" />
+  <progress percent="{{percent}}" active="true" active-mode="forwards" duration="5" border-radius="8" />
 </view>
-
 <view wx:for="{{todoListByTag}}" wx:for-item="items" wx:key="tag" class="tag">
   <view class="tagTitle">
     <text>{{items.tag}}</text>
-    <view bindtap="addTodoItem" id="{{items.tag}}" class="addTodoItem">+</view>
+    <view class="operation">
+      <view bindtap="addTodoItem" id="{{items.tag}}" class="addTodoItem">+</view>
+      <view bindtap="more" class="more" id="{{items.tag}}">···</view>
+    </view>
   </view>
   <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="id" class="todoItem {{item.completed&&'completed'}}" id="{{item.id}}">
     <view class="toggleButton">
-      <icon wx:if="{{item.completed}}" type="success"></icon>
+      <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
     </view>
     <!-- <switch type="checkbox" checked="{{item.completed}}" bindchange="switchChange"></switch> -->
     <text>{{item.value}}</text>
   </view>
 </view>
 <button bindtap="addTag">+</button>
+<selectBox visible="{{display.more}}" range="{{range}}" boxY="{{boxY}}" bindcancel="hideView" bindedittag="editTag" binddeletetag="deleteTag"></selectBox>
 
-<dialog placeholder="待办名称" visible="{{displayAddTodoItem}}" bindconfirm="comfirmAddTodo" bindcancel="cancelAddTodo"></dialog>
+<dialog headerText="新增待办" placeholder="待办名称" visible="{{display.addTodoItem}}" bindconfirm="comfirmAddTodo" bindcancel="hideView"></dialog>
 
-<dialog placeholder="标签名称" visible="{{displayAddTag}}" bindconfirm="comfirmAddTag" bindcancel="cancelAddTag"></dialog>
+<dialog headerText="新增标签" placeholder="标签名称" visible="{{display.addTag}}" bindconfirm="comfirmAddTag" bindcancel="hideView"></dialog>
+
+<dialog headerText="编辑标签" placeholder="标签名称" visible="{{display.editTag}}" bindconfirm="comfirmEditTag" bindcancel="hideView"></dialog>

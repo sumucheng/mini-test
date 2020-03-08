@@ -4,6 +4,10 @@ Component({
   behaviors: [],
 
   properties: {
+    headerText: {
+      type: String,
+      value: ''
+    },
     placeholder: {
       type: String,
       value: ''

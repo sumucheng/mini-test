@@ -1,0 +1,31 @@
+/* components/selectBox/selectBox.wxss */
+
+.op {
+  position: fixed;
+  bottom: 0;
+  z-index: 99;
+  top: 0;
+  width: 100%;
+  opacity: 0.1;
+  background-color: black;
+}
+
+.wrapper {
+
+  position: fixed;
+  z-index: 100;
+  right: 100rpx;
+  width: 200rpx;
+  background: white;
+  border-radius: 24rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.wrapper>.item {
+  padding: 20rpx;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -5,7 +5,12 @@
   z-index:99;
   top:0;
   width: 100%;
-  opacity: 0;
+ opacity: 0.1;
+  background-color: black;
+}
+.header{
+  background: #eee;
+  padding:20rpx  40rpx;
 }
 .wrapper {
   position: fixed;
@@ -15,8 +20,9 @@
   width: 100%;
   background: white;
   border: 1rpx solid #ccc;
-  border-radius: 8rpx;
+  border-radius: 12rpx;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .wrapper > .container {

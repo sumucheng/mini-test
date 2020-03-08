@@ -22,7 +22,7 @@ Page({
     )
     this.setData({
       list: completedList.map(i => {
-        i.completedTime = formatTime(new Date(i.completedTime))
+        i.completedTimeText = formatTime(new Date(i.completedTime))
         return i
       })
     })

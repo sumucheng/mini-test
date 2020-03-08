@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "dialog": "../../components/dialog/dialog"
+    "dialog": "../../components/dialog/dialog",
+    "selectBox": "../../components/selectBox/selectBox"
   }
 }

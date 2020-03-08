@@ -2,13 +2,12 @@
   "pages": [
     "pages/todos/todos",
     "pages/completed/completed",
-    
     "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "TODO",
+    "navigationBarTitleText": "今日事",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -18,7 +17,6 @@
       {
         "pagePath": "pages/todos/todos",
         "text": "待办"
-       
       },
       {
         "pagePath": "pages/completed/completed",

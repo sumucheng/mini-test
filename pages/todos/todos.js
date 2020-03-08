@@ -8,10 +8,23 @@ Page({
   data: {
     tag: '',
     todoListByTag: [],
-    percentText:'',
+    percentText: '',
     percent: 0,
-    displayAddTodoItem: false,
-    displayAddTag: false
+    display: {
+      addTodoItem: false,
+      addTag: false,
+      more: false,
+      editTag: false
+    },
+    range: [{
+      text: '编辑',
+      method: 'editTag'
+    }, {
+      text: '删除',
+      method: 'deleteTag'
+    }],
+    boxY: 0,
+    moreTag: ''
   },
   comfirmAddTodo: function(e) {
     app.globalData.todoList.unshift({
@@ -24,41 +37,54 @@ Page({
     })
     this.updateTodoList()
     wx.setStorageSync('todoList', app.globalData.todoList)
-    this.setData({
-      displayAddTodoItem: false
-    })
-  },
-  cancelAddTodo: function(e) {
-    this.setData({
-      displayAddTodoItem: false
-    })
+    this.hideView()
   },
   comfirmAddTag: function(e) {
     app.globalData.tags.push(e.detail)
     wx.setStorageSync('tags', app.globalData.tags)
+    this.hideView()
     this.setData({
-      displayAddTag: false,
       todoListByTag: [...this.data.todoListByTag, {
         tag: e.detail,
         data: []
       }]
     })
   },
-  cancelAddTag: function(e) {
-    this.setData({
-      displayAddTag: false
-    })
-  },
   addTodoItem: function(e) {
+    this.displayView('addTodoItem')
     this.setData({
-      displayAddTodoItem: true,
       tag: e.target.id
     })
   },
   addTag: function(e) {
+    this.displayView('addTag')
+  },
+  more: function(e) {
+    this.displayView('more')
     this.setData({
-      displayAddTag: true,
+      boxY: e.detail.y,
+      moreTag: e.currentTarget.id
     })
+  },
+  editTag: function(e) {
+    this.hideView()
+    this.displayView('editTag')
+  },
+  comfirmEditTag: function(e) {
+    //....
+    this.hideView()
+  },
+
+  deleteTag: function(e) {
+    let index = app.globalData.tags.findIndex(i => i === this.data.moreTag)
+    app.globalData.tags.splice(index, 1)
+    wx.setStorageSync('tags', app.globalData.tags)
+    app.globalData.todoList = app.globalData.todoList.filter(
+      i =>  (i.tag !== this.data.moreTag) || (i.tag === this.data.moreTag && i.archive)
+    )
+    wx.setStorageSync('todoList', app.globalData.todoList)
+    this.updateTodoList()
+    this.hideView()
   },
 
   toggle: function(e) {
@@ -77,11 +103,10 @@ Page({
     this.updateTodoList()
   },
 
+  // helper
   updateTodoList: function() {
-    let todoList = app.globalData.todoList.filter(
-      i => (!i.completed) || (i.completed && new Date(i.completedTime).getDate() === new Date().getDate())
-    )
-    let completedTodos=todoList.filter(i=>i.completed)
+    let todoList = app.globalData.todoList.filter(i => !i.archive)
+    let completedTodos = todoList.filter(i => i.completed)
     let result = []
     for (let tag of app.globalData.tags) {
       result.push({
@@ -92,7 +117,23 @@ Page({
     this.setData({
       todoListByTag: result,
       percentText: completedTodos.length + ' / ' + todoList.length,
-      percent:completedTodos.length/todoList.length*100
+      percent: completedTodos.length / todoList.length * 100
+    })
+  },
+  displayView: function(string) {
+    this.data.display[string] = true
+    this.setData({
+      display: this.data.display
+    })
+  },
+  hideView: function() {
+    this.setData({
+      display: {
+        addTodoItem: false,
+        addTag: false,
+        more: false,
+        editTag: false
+      }
     })
   }
 })

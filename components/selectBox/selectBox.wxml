@@ -1,0 +1,9 @@
+<!--components/selectBox/selectBox.wxml-->
+<view wx:if="{{visible}}">
+  <view class="wrapper" style="top:{{boxY-20}}px">
+    <view wx:for="{{range}}"  wx:for-item="item" wx:key="method" class="item">
+      <text bindtap="{{item.method}}" id="{{item.method}}">{{item.text}}</text>
+    </view>
+  </view>
+  <view class="op" bindtap="cancel"></view>
+</view>

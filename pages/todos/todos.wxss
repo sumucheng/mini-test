@@ -1,6 +1,6 @@
 .header {
   margin: 20rpx;
-  padding: 10rpx 30rpx; 
+  padding: 10rpx 30rpx;
 }
 
 .header > .percentText {
@@ -10,6 +10,7 @@
 .tag {
   border: 1rpx solid #eee;
   margin: 20rpx;
+  overflow: hidden;
   border-radius: 12rpx;
 }
 
@@ -18,6 +19,14 @@
   justify-content: space-between;
   background: #eee;
   padding: 10rpx 30rpx;
+}
+
+.tag > .tagTitle >.operation {
+  display: flex;
+}
+
+.tag > .tagTitle >.operation>.addTodoItem {
+  margin: 0 20rpx;
 }
 
 .tag > .todoItem {
@@ -40,5 +49,7 @@
 }
 
 .todoItem.completed  > .toggleButton {
-  border-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
