@@ -78,22 +78,30 @@ Page({
     })
   },
   moreAction: function(e) {
-    console.log(e)
     if (e.detail.value === 'archiveTodo') this.archiveTodo()
     else if (e.detail.value === 'deleteTag') this.deleteTag()
-    
+
   },
   deleteTag: function(e) {
-    const selectedTag = this.data.selectedTag
-    let index = app.globalData.tags.findIndex(i => i === selectedTag)
-    app.globalData.tags.splice(index, 1)
-    wx.setStorageSync('tags', app.globalData.tags)
-    app.globalData.todoList = app.globalData.todoList.filter(
-      i => (i.tag !== selectedTag) || (i.tag === selectedTag && i.archive)
-    )
-    wx.setStorageSync('todoList', app.globalData.todoList)
-    this.updateTodoList()
-    this.hideView()
+    let self = this
+    wx.showModal({
+      title: '提示',
+      content: '该标签下所有的待办也会随之删除，是否确认删除？',
+      success(res) {
+        if (res.confirm) {
+          const selectedTag = self.data.selectedTag
+          let index = app.globalData.tags.findIndex(i => i === selectedTag)
+          app.globalData.tags.splice(index, 1)
+          wx.setStorageSync('tags', app.globalData.tags)
+          app.globalData.todoList = app.globalData.todoList.filter(
+            i => (i.tag !== selectedTag) || (i.tag === selectedTag && i.archive)
+          )
+          wx.setStorageSync('todoList', app.globalData.todoList)
+          self.updateTodoList()
+          self.hideView()
+        } else self.hideView()
+      }
+    })
   },
 
   archiveTodo: function(e) {
@@ -155,8 +163,7 @@ Page({
       },
       tag: '',
     })
-    wx.showTabBar({
-      
-    })
+    wx.showTabBar({})
+
   }
 })
