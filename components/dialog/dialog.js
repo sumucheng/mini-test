@@ -1,8 +1,6 @@
 // components/addTodoItem/addTodoItem.js
 Component({
-
   behaviors: [],
-
   properties: {
     headerText: {
       type: String,
@@ -24,7 +22,20 @@ Component({
 
   methods: {
     confirm: function() {
-      if (this.data.value.trim() === '') return
+      if (this.data.value.trim() === '') {
+        wx.showModal({
+          content: '名称不能为空',
+          showCancel: false
+        })
+        return
+      }
+      if (this.data.value.trim().length > 15) {
+        wx.showModal({
+          content: '名称长度不能超过15',
+          showCancel: false
+        })
+        return
+      }
       this.triggerEvent('confirm', this.data.value.trim())
       this.setData({
         value: ''

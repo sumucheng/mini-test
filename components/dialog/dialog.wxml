@@ -4,7 +4,7 @@
   <view class="header">{{headerText}}</view>
     <view class="container">
       <button size="mini" bindtap="cancel">取消</button>
-      <input auto-focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" maxlength="10" placeholder="{{placeholder}}"></input>
+      <input auto-focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" placeholder="{{placeholder}}"></input>
       <button size="mini" bindtap="confirm">确定</button>
     </view>
   </view>

@@ -31,7 +31,13 @@ Page({
     this.hideView()
   },
   comfirmAddTag: function(e) {
-    if (app.globalData.tags.find(i => i === e.detail)) return
+    if (app.globalData.tags.find(i => i === e.detail)) {
+      wx.showModal({
+        content: '标签名重复',
+        showCancel:false
+      })
+      return
+    }
     app.globalData.tags.push(e.detail)
     wx.setStorageSync('tags', app.globalData.tags)
     this.hideView()
@@ -61,7 +67,7 @@ Page({
         else if (index === 1) self.deleteTag()
       },
     })
- 
+
     this.setData({
       selectedTag: e.currentTarget.id
     })
