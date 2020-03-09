@@ -12,19 +12,9 @@ Page({
     percent: 0,
     display: {
       addTodoItem: false,
-      addTag: false,
-      more: false
+      addTag: false
     },
-    tooltipShow: false,
-    action: [{
-        text: '归档已完成的待办',
-        value: 'archiveTodo'
-      },
-      {
-        text: '删除标签',
-        value: 'deleteTag'
-      }
-    ],
+    tooltipShow: false
   },
 
   comfirmAddTodo: function(e) {
@@ -62,26 +52,21 @@ Page({
     this.displayView('addTag')
   },
   more: function(e) {
-    // wx.showActionSheet({
-    //   itemList: ['1', '2'],
-    //   success(res) {
-    //     let index = res.tapIndex
-    //     console.log(this)
-    //     if (index === 0) this.archiveTodo()
-    //     else if (index === 1) this.deleteTag()
-    //   },
-    // })
-    this.displayView('more')
-    wx.hideTabBar({})
+    let self=this
+    wx.showActionSheet({
+      itemList: ['归档已完成的待办', '删除标签'],
+      success(res) {
+        let index = res.tapIndex
+        if (index === 0) self.archiveTodo()
+        else if (index === 1) self.deleteTag()
+      },
+    })
+ 
     this.setData({
       selectedTag: e.currentTarget.id
     })
   },
-  moreAction: function(e) {
-    if (e.detail.value === 'archiveTodo') this.archiveTodo()
-    else if (e.detail.value === 'deleteTag') this.deleteTag()
 
-  },
   deleteTag: function(e) {
     let self = this
     wx.showModal({
@@ -150,11 +135,13 @@ Page({
   },
   displayView: function(string) {
     this.data.display[string] = true
+    
     this.setData({
       display: this.data.display
     })
   },
   hideView: function() {
+    wx.showTabBar({})
     this.setData({
       display: {
         addTodoItem: false,
@@ -163,7 +150,5 @@ Page({
       },
       tag: '',
     })
-    wx.showTabBar({})
-
   }
 })

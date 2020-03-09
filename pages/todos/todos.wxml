@@ -20,12 +20,6 @@
 </view>
 <button bindtap="addTag">+</button>
 
-<mp-actionSheet bindactiontap="moreAction" show="{{display.more}}" actions="{{action}}"  bindclose="hideView">
-</mp-actionSheet>
-
-<!-- <selectBox visible="{{display.more}}" boxY="{{boxY}}" bindcancel="hideView" bindarchivetodo="archiveTodo" binddeletetag="deleteTag"></selectBox> -->
-
 <dialog headerText="新增待办" placeholder="待办名称" visible="{{display.addTodoItem}}" bindconfirm="comfirmAddTodo" bindcancel="hideView"></dialog>
 
 <dialog headerText="新增标签" placeholder="标签名称" visible="{{display.addTag}}" bindconfirm="comfirmAddTag" bindcancel="hideView"></dialog>
-
