@@ -1,4 +1,5 @@
 // components/addTodoItem/addTodoItem.js
+const app = getApp()
 Component({
   behaviors: [],
   properties: {
@@ -17,11 +18,10 @@ Component({
   },
 
   data: {
-    value: ''
+    value: '',
   },
 
   methods: {
-
     confirm: function() {
       if (this.data.value.trim() === '') {
         wx.showModal({
@@ -53,8 +53,8 @@ Component({
         value: e.detail.value
       })
     },
-    catchTouchmove(e){
-      return 
+    catchTouchmove(e) {
+      return
     }
   }
 })

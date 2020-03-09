@@ -1,8 +1,5 @@
 {
   "usingComponents": {
-    "dialog": "../../components/dialog/dialog",
-    "selectBox": "../../components/selectBox/selectBox",
-   "mp-dialog": "../weui-miniprogram/dialog/dialog",
-   "mp-actionSheet": "../weui-miniprogram/actionsheet/actionsheet"
+    "dialog": "../../components/dialog/dialog"
   }
 }

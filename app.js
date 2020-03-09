@@ -8,7 +8,7 @@ App({
   globalData: {
     userInfo: null,
     todoList: Array.from(wx.getStorageSync('todoList') || initTodoList()).map(i => {
-      if(i.archive) return i
+      if (i.archive) return i
       i.archive = (i.completed && new Date(i.completedTime).getDate() !== new Date().getDate())
       return i
     }),
@@ -16,7 +16,6 @@ App({
   },
   onLaunch: function() {
     wx.setStorageSync('todoList', this.globalData.todoList)
-    // wx.setStorageSync('archiveList', this.globalData.archiveList)
     // 登录
     wx.login({
       success: res => {

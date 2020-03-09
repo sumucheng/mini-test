@@ -34,7 +34,7 @@ Page({
     if (app.globalData.tags.find(i => i === e.detail)) {
       wx.showModal({
         content: '标签名重复',
-        showCancel:false
+        showCancel: false
       })
       return
     }
@@ -58,13 +58,12 @@ Page({
     this.displayView('addTag')
   },
   more: function(e) {
-    let self=this
+    let self = this
     wx.showActionSheet({
       itemList: ['归档已完成的待办', '删除标签'],
       success(res) {
-        let index = res.tapIndex
-        if (index === 0) self.archiveTodo()
-        else if (index === 1) self.deleteTag()
+        if (res.tapIndex === 0) self.archiveTodo()
+        else if (res.tapIndex === 1) self.deleteTag()
       },
     })
 
@@ -108,13 +107,8 @@ Page({
 
   toggle: function(e) {
     let item = app.globalData.todoList.find(i => i.id === Number(e.currentTarget.id))
-    if (item.completed) {
-      item.completed = false
-      item.completedTime = null
-    } else {
-      item.completed = true
-      item.completedTime = new Date()
-    }
+    item.completed = !item.completed
+    item.completedTime = item.completed ? new Date() : null
     this.updateTodoList()
     wx.setStorageSync('todoList', app.globalData.todoList)
   },
@@ -140,8 +134,8 @@ Page({
     })
   },
   displayView: function(string) {
-    this.data.display[string] = true
     wx.hideTabBar({})
+    this.data.display[string] = true
     this.setData({
       display: this.data.display
     })
@@ -152,9 +146,7 @@ Page({
       display: {
         addTodoItem: false,
         addTag: false,
-        more: false
       },
-      tag: '',
     })
   }
 })

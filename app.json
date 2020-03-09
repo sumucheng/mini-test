@@ -20,11 +20,7 @@
       },
       {
         "pagePath": "pages/completed/completed",
-        "text": "已完成"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的"
+        "text": "归档"
       }
     ]
   },
