@@ -21,6 +21,7 @@ Component({
   },
 
   methods: {
+
     confirm: function() {
       if (this.data.value.trim() === '') {
         wx.showModal({
@@ -51,6 +52,9 @@ Component({
       this.setData({
         value: e.detail.value
       })
+    },
+    catchTouchmove(e){
+      return 
     }
   }
 })
