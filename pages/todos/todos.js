@@ -141,7 +141,7 @@ Page({
   },
   displayView: function(string) {
     this.data.display[string] = true
-    
+    wx.hideTabBar({})
     this.setData({
       display: this.data.display
     })
