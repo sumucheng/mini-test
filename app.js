@@ -1,21 +1,10 @@
 //app.js
-import {
-  initTodoList,
-  // initArchiveList,
-  initTags,
-} from './utils/util.js'
 App({
-  globalData: {
-    userInfo: null,
-    todoList: Array.from(wx.getStorageSync('todoList') || initTodoList()).map(i => {
-      if (i.archive) return i
-      i.archive = (i.completed && new Date(i.completedTime).getDate() !== new Date().getDate())
-      return i
-    }),
-    tags: Array.from(wx.getStorageSync('tags') || initTags())
-  },
   onLaunch: function() {
-    wx.setStorageSync('todoList', this.globalData.todoList)
+    wx.cloud.init({
+      traceUser: true,
+    })
+
     // 登录
     wx.login({
       success: res => {
@@ -43,5 +32,7 @@ App({
       }
     })
   },
-
+  globalData: {
+    userInfo: null
+  }
 })

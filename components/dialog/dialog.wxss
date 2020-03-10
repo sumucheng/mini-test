@@ -36,6 +36,6 @@
   justify-content: center;
 }
 
-.wrapper  >.inner > input { 
+.wrapper  >.inner > input {
   margin: 24rpx 40rpx;
 }

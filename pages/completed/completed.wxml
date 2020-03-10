@@ -2,7 +2,7 @@
 <view wx:for="{{list}}" wx:for-item="item" wx:key="id" class="item">
   <view class="title">
     <text>{{item.completedTimeText}}</text>
-    <view bindtap="deleteTodoItem" id="{{item.id}}">×</view>
+    <view bindtap="deleteTodoItem" id="{{item._id}}">×</view>
   </view>
   <view class="text">{{item.tag}} {{item.value}}</view>
 </view>

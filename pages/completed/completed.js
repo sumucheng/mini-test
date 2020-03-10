@@ -2,27 +2,29 @@
 import {
   formatTime
 } from '../../utils/util.js'
-const app = getApp()
+const db = wx.cloud.database()
 Page({
   data: {
     list: []
   },
   deleteTodoItem: function(e) {
-    let index = app.globalData.todoList.findIndex(i => i.id === Number(e.target.id))
-    app.globalData.todoList.splice(index, 1)
-    wx.setStorageSync('todoList', app.globalData.todoList)
-    this.updateList()
-  },
-  onShow: function() {
-    this.updateList()
-  },
-  updateList() {
-    let completedList = app.globalData.todoList.filter(i => i.archive)
     this.setData({
-      list: completedList.map(i => {
-        i.completedTimeText = formatTime(new Date(i.completedTime))
-        return i
-      })
+      list: this.data.list.filter(i => i._id !== e.target.id)
+    })
+    db.collection('todoList').doc(e.target.id).remove()
+  },
+  onLoad: function() {
+    db.collection('todoList').where({
+      archive: true
+    }).get({
+      success: res => {
+        this.setData({
+          list: res.data.map(i => {
+            i.completedTimeText = formatTime(new Date(i.completedTime))
+            return i
+          })
+        })
+      }
     })
   }
 })

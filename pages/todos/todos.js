@@ -2,11 +2,13 @@
 import {
   createId
 } from '../../utils/util.js'
-const app = getApp()
 
+const db = wx.cloud.database()
 Page({
   data: {
     selectedTag: '',
+    todoList: [],
+    tags: [],
     todoListByTag: [],
     percentText: '',
     percent: 0,
@@ -18,28 +20,36 @@ Page({
   },
 
   comfirmAddTodo: function(e) {
-    app.globalData.todoList.unshift({
-      tag: this.data.selectedTag,
-      id: createId(),
-      value: e.detail,
-      completed: false,
-      time: new Date(),
-      completedTime: null
+    db.collection('todoList').add({
+      data: {
+        tag: this.data.selectedTag,
+        id: createId(),
+        value: e.detail,
+        completed: false,
+        time: new Date(),
+        completedTime: null,
+        archive: false
+      },
+      success: res => {
+        this.onQuery()
+      }
     })
     this.updateTodoList()
-    wx.setStorageSync('todoList', app.globalData.todoList)
     this.hideView()
   },
   comfirmAddTag: function(e) {
-    if (app.globalData.tags.find(i => i === e.detail)) {
+    if (this.data.tags.find(i => i.name === e.detail)) {
       wx.showModal({
         content: '标签名重复',
         showCancel: false
       })
       return
     }
-    app.globalData.tags.push(e.detail)
-    wx.setStorageSync('tags', app.globalData.tags)
+    db.collection('tags').add({
+      data: {
+        name: e.detail
+      }
+    })
     this.hideView()
     this.setData({
       todoListByTag: [...this.data.todoListByTag, {
@@ -73,58 +83,81 @@ Page({
   },
 
   deleteTag: function(e) {
-    let self = this
-    wx.showModal({
-      title: '提示',
-      content: '该标签下所有的待办也会随之删除，是否确认删除？',
-      success(res) {
-        if (res.confirm) {
-          const selectedTag = self.data.selectedTag
-          let index = app.globalData.tags.findIndex(i => i === selectedTag)
-          app.globalData.tags.splice(index, 1)
-          wx.setStorageSync('tags', app.globalData.tags)
-          app.globalData.todoList = app.globalData.todoList.filter(
-            i => (i.tag !== selectedTag) || (i.tag === selectedTag && i.archive)
-          )
-          wx.setStorageSync('todoList', app.globalData.todoList)
-          self.updateTodoList()
-          self.hideView()
-        } else self.hideView()
-      }
-    })
+    // let self = this
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '该标签下所有的待办也会随之删除，是否确认删除？',
+    //   success(res) {
+    //     if (res.confirm) {
+    //       const selectedTag = self.data.selectedTag
+    //       let index = app.globalData.tags.findIndex(i => i === selectedTag)
+    //       app.globalData.tags.splice(index, 1)
+    //       wx.setStorageSync('tags', app.globalData.tags)
+    //       app.globalData.todoList = app.globalData.todoList.filter(
+    //         i => (i.tag !== selectedTag) || (i.tag === selectedTag && i.archive)
+    //       )
+    //       wx.setStorageSync('todoList', app.globalData.todoList)
+    //       self.updateTodoList()
+    //       self.hideView()
+    //     } else self.hideView()
+    //   }
+    // })
   },
 
   archiveTodo: function(e) {
-    app.globalData.todoList = app.globalData.todoList.map(i => {
+    const newList = this.data.todoList.map(i => {
       if (i.archive) return i
-      i.archive = (i.completed && i.tag === this.data.selectedTag)
+      if (i.completed && i.tag === this.data.selectedTag){
+        i.archive = true
+        db.collection('todoList').doc(i._id).update({
+          data: {
+            archive: true
+          }
+        })
+        return i
+      }
       return i
     })
-    wx.setStorageSync('todoList', app.globalData.todoList)
+    this.setData({
+      todoList: newList
+    })
     this.updateTodoList()
     this.hideView()
   },
 
   toggle: function(e) {
-    let item = app.globalData.todoList.find(i => i.id === Number(e.currentTarget.id))
-    item.completed = !item.completed
-    item.completedTime = item.completed ? new Date() : null
+    const str = e.currentTarget.id.split('+')
+    const id = str[0]
+    const completed = str[1]
+    let todo = this.data.todoList.find(i => i._id === id)
+    todo.completedTime = todo.completed ? null : new Date()
+    todo.completed = !todo.completed
     this.updateTodoList()
-    wx.setStorageSync('todoList', app.globalData.todoList)
+
+    db.collection('todoList').doc(id).update({
+      data: {
+        completedTime: todo.completedTime,
+        completed: todo.completed
+      }
+    })
   },
   onLoad: function(options) {
-    this.updateTodoList()
+    this.onQuery()
+  },
+  onHide: function() {
+   
   },
 
   // helper
   updateTodoList: function() {
-    let todoList = app.globalData.todoList.filter(i => !i.archive)
+    let todoList = this.data.todoList.filter(i=>!i.archive)
+    let tags = this.data.tags
     let completedTodos = todoList.filter(i => i.completed)
     let result = []
-    for (let tag of app.globalData.tags) {
+    for (let tag of tags) {
       result.push({
-        tag: tag,
-        data: todoList.filter(i => i.tag === tag)
+        tag: tag.name,
+        data: todoList.filter(i => i.tag === tag.name)
       })
     }
     this.setData({
@@ -147,6 +180,20 @@ Page({
         addTodoItem: false,
         addTag: false,
       },
+    })
+  },
+  onQuery: function() {
+    Promise.all([
+      db.collection('tags').get(),
+      db.collection('todoList').where({
+        archive: false
+      }).get()
+    ]).then(res => {
+      this.setData({
+        tags: res[0].data,
+        todoList: res[1].data,
+      })
+      this.updateTodoList()
     })
   }
 })
