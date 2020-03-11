@@ -15,9 +15,9 @@ exports.main = async(event, context) => {
       .update({
         data: {
           archive: true
-        },
+        }
       })
   } catch (e) {
     console.error(e)
   }
-}
+} 

@@ -8,7 +8,7 @@
       <view bindtap="more" class="more" id="{{items.tag}}">···</view>
     </view>
   </view>
-  <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item.id}}+{{item.completed}}">
+  <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
     <view class="toggleButton">
       <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
     </view>

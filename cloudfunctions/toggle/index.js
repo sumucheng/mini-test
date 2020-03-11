@@ -8,7 +8,7 @@ const _ = db.command
 exports.main = async(event, context) => {
   try {
     return await db.collection('todoList').where({
-        id: event.id
+        _id: event._id
       })
       .update({
         data: {
