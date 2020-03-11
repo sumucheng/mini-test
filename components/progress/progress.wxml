@@ -1,0 +1,5 @@
+
+<view class="header">
+  <view class="percentText">{{percentText}}</view>
+  <progress percent="{{percent}}" active="true" active-mode="forwards" duration="5" border-radius="8" />
+</view>

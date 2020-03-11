@@ -3,6 +3,7 @@ App({
   onLaunch: function() {
     wx.cloud.init({
       traceUser: true,
+      env: 'mini-todo-biumr'
     })
 
     // 登录

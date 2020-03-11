@@ -3,7 +3,7 @@
   <view class="wrapper">
     <view class="inner">
       <view class="header">{{headerText}}</view>
-      <input bindfocus="handleFocus" focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" placeholder="{{placeholder}}" bindconfirm="confirm"></input>
+      <input focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" placeholder="{{placeholder}}" bindconfirm="confirm"></input>
     </view>
   </view>
   <view class="op" bindtap="cancel"></view>

@@ -13,10 +13,13 @@ const formatNumber = n => {
 }
 
 const createId = () => {
-  let id = wx.getStorageSync('maxId') || 0
-  id += 1
-  wx.setStorageSync("maxId", id)
-  return id
+  // Math.random()
+  // db.collection('maxId').get().update({
+  //   data: {
+  //     id: db.command.inc(1)
+  //   }
+  // })
+  // return maxId
 }
 const initTags = () => {
   return ['点击右侧的 + 号可添加待办', '标签2号']

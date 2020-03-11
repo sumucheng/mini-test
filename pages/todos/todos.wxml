@@ -1,8 +1,5 @@
-<!--pages/test/test.wxml-->
-<view class="header">
-  <view class="percentText">{{percentText}}</view>
-  <progress percent="{{percent}}" active="true" active-mode="forwards" duration="5" border-radius="8" />
-</view>
+<x-progress>
+</x-progress>
 <view wx:for="{{todoListByTag}}" wx:for-item="items" wx:key="tag" class="tag">
   <view class="tagTitle">
     <text>{{items.tag}}</text>
@@ -11,7 +8,7 @@
       <view bindtap="more" class="more" id="{{items.tag}}">···</view>
     </view>
   </view>
-  <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
+  <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item.id}}+{{item.completed}}">
     <view class="toggleButton">
       <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
     </view>
@@ -20,6 +17,6 @@
 </view>
 <button bindtap="addTag" class="addTagBtn">+</button>
 
-<dialog headerText="新增待办" placeholder="待办名称" visible="{{display.addTodoItem}}" bindconfirm="comfirmAddTodo" bindcancel="hideView"></dialog>
+<x-dialog headerText="新增待办" placeholder="待办名称" visible="{{display.addTodoItem}}" bindconfirm="comfirmAddTodo" bindcancel="hideView"></x-dialog>
 
-<dialog headerText="新增标签" placeholder="标签名称" visible="{{display.addTag}}" bindconfirm="comfirmAddTag" bindcancel="hideView"></dialog>
+<x-dialog headerText="新增标签" placeholder="标签名称" visible="{{display.addTag}}" bindconfirm="comfirmAddTag" bindcancel="hideView"></x-dialog>

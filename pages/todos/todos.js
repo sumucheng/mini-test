@@ -1,8 +1,7 @@
-// pages/test/test.js
 import {
-  createId
+  createId,
+  formatTime
 } from '../../utils/util.js'
-
 const db = wx.cloud.database()
 Page({
   data: {
@@ -10,31 +9,26 @@ Page({
     todoList: [],
     tags: [],
     todoListByTag: [],
-    percentText: '',
-    percent: 0,
     display: {
       addTodoItem: false,
       addTag: false
     },
-    tooltipShow: false
+    wacthTodoList: null,
+    watchTags: null
   },
 
   comfirmAddTodo: function(e) {
+    const newTodo = {
+      tag: this.data.selectedTag,
+      value: e.detail,
+      completed: false,
+      time: new Date(),
+      archive: false,
+      // id: Math.random()
+    }
     db.collection('todoList').add({
-      data: {
-        tag: this.data.selectedTag,
-        id: createId(),
-        value: e.detail,
-        completed: false,
-        time: new Date(),
-        completedTime: null,
-        archive: false
-      },
-      success: res => {
-        this.onQuery()
-      }
+      data: newTodo
     })
-    this.updateTodoList()
     this.hideView()
   },
   comfirmAddTag: function(e) {
@@ -49,77 +43,71 @@ Page({
       data: {
         name: e.detail
       }
+      // ,
+      // success: res => {
+      //   this.data.tags.find(i => i.name === e.detail)._id = res._id
+      //   this.setData({
+      //     tags: this.data.tags
+      //   })
+      // }
     })
-    this.hideView()
     this.setData({
       todoListByTag: [...this.data.todoListByTag, {
         tag: e.detail,
         data: []
-      }]
+      }],
+      // tags: [...this.data.tags, {
+      //   _id: null,
+      //   name: e.detail
+      // }]
     })
-  },
-  addTodoItem: function(e) {
-    this.displayView('addTodoItem')
-    this.setData({
-      selectedTag: e.target.id
-    })
-  },
-  addTag: function(e) {
-    this.displayView('addTag')
-  },
-  more: function(e) {
-    let self = this
-    wx.showActionSheet({
-      itemList: ['归档已完成的待办', '删除标签'],
-      success(res) {
-        if (res.tapIndex === 0) self.archiveTodo()
-        else if (res.tapIndex === 1) self.deleteTag()
-      },
-    })
-
-    this.setData({
-      selectedTag: e.currentTarget.id
-    })
+    this.hideView()
   },
 
   deleteTag: function(e) {
-    // let self = this
-    // wx.showModal({
-    //   title: '提示',
-    //   content: '该标签下所有的待办也会随之删除，是否确认删除？',
-    //   success(res) {
-    //     if (res.confirm) {
-    //       const selectedTag = self.data.selectedTag
-    //       let index = app.globalData.tags.findIndex(i => i === selectedTag)
-    //       app.globalData.tags.splice(index, 1)
-    //       wx.setStorageSync('tags', app.globalData.tags)
-    //       app.globalData.todoList = app.globalData.todoList.filter(
-    //         i => (i.tag !== selectedTag) || (i.tag === selectedTag && i.archive)
-    //       )
-    //       wx.setStorageSync('todoList', app.globalData.todoList)
-    //       self.updateTodoList()
-    //       self.hideView()
-    //     } else self.hideView()
-    //   }
-    // })
+    wx.showModal({
+      title: '提示',
+      content: '该标签下所有的待办也会随之删除，是否确认删除？',
+      success: res => {
+        if (res.confirm) {
+          const selectedTag = this.data.selectedTag
+          let index = this.data.tags.findIndex(i => i.name === selectedTag)
+          db.collection('tags').doc(this.data.tags[index]._id).remove()
+          wx.cloud.callFunction({
+            name: 'deleteTodos',
+            data: {
+              tag: selectedTag
+            },
+            fail: console.error
+          })
+          this.data.tags.splice(index, 1)
+          this.setData({
+            todoList: this.data.todoList.filter(i => i.tag !== selectedTag),
+            tags: this.data.tags
+          })
+          this.updateTodoList()
+        }
+        this.hideView()
+      }
+    })
   },
 
   archiveTodo: function(e) {
-    const newList = this.data.todoList.map(i => {
-      if (i.archive) return i
-      if (i.completed && i.tag === this.data.selectedTag){
+    let list = this.data.todoList.map(i => {
+      if (i.completed && !i.archive && i.tag === this.data.selectedTag) {
         i.archive = true
-        db.collection('todoList').doc(i._id).update({
-          data: {
-            archive: true
-          }
-        })
-        return i
       }
       return i
     })
+    wx.cloud.callFunction({
+      name: 'archiveTodo',
+      data: {
+        tag: selectedTag
+      },
+      fail: console.error
+    })
     this.setData({
-      todoList: newList
+      todoList: list
     })
     this.updateTodoList()
     this.hideView()
@@ -127,32 +115,81 @@ Page({
 
   toggle: function(e) {
     const str = e.currentTarget.id.split('+')
-    const id = str[0]
+    const id = Number(str[0])
     const completed = str[1]
-    let todo = this.data.todoList.find(i => i._id === id)
+    let todo = this.data.todoList.find(i => i.id === id)
     todo.completedTime = todo.completed ? null : new Date()
+    todo.completedTimeText = todo.completed ? null : formatTime(new Date())
     todo.completed = !todo.completed
-    this.updateTodoList()
 
-    db.collection('todoList').doc(id).update({
-      data: {
-        completedTime: todo.completedTime,
-        completed: todo.completed
-      }
+    this.setData({
+      todoList: this.data.todoList
     })
+    this.updateTodoList()
+    wx.cloud.callFunction({
+      name: 'toggle',
+      data: {
+        id: id,
+        completedTime: todo.completedTime,
+        completed: todo.completed,
+        completedTimeText: todo.completedTimeText
+      },
+      fail: console.error
+    })
+    // db.collection('todoList').doc(id).update({
+    //   data: {
+    //     completedTime: todo.completedTime,
+    //     completed: todo.completed
+    //   }
+    // })
   },
   onLoad: function(options) {
     this.onQuery()
+    const watcher = db.collection('todoList')
+      .where({
+        archive: false
+      })
+      .watch({
+        onChange: snapshot => {
+          console.log(1)
+          this.setData({
+            todoList: snapshot.docs
+          })
+          this.updateTodoList()
+        },
+        onError: err => console.error(err)
+      })
+    const watcher2 = db.collection('tags')
+      .watch({
+        onChange: snapshot => {
+          this.setData({
+            tags: snapshot.docs
+          })
+          this.updateTodoList()
+        },
+        onError: err => console.error(err)
+
+      })
+    this.setData({
+      wacthTodoList: watcher,
+      watchTags: watcher2
+    })
   },
-  onHide: function() {
-   
+
+  onUnload() {
+    this.data.wacthTodoList.close()
+    this.data.watchTags.close()
+    this.setData({
+      wacthTodoList: null,
+      watchTags: null
+    })
   },
+
 
   // helper
   updateTodoList: function() {
-    let todoList = this.data.todoList.filter(i=>!i.archive)
+    let todoList = this.data.todoList.filter(i => !i.archive)
     let tags = this.data.tags
-    let completedTodos = todoList.filter(i => i.completed)
     let result = []
     for (let tag of tags) {
       result.push({
@@ -162,26 +199,9 @@ Page({
     }
     this.setData({
       todoListByTag: result,
-      percentText: completedTodos.length + ' / ' + todoList.length,
-      percent: completedTodos.length / todoList.length * 100
     })
   },
-  displayView: function(string) {
-    wx.hideTabBar({})
-    this.data.display[string] = true
-    this.setData({
-      display: this.data.display
-    })
-  },
-  hideView: function() {
-    wx.showTabBar({})
-    this.setData({
-      display: {
-        addTodoItem: false,
-        addTag: false,
-      },
-    })
-  },
+
   onQuery: function() {
     Promise.all([
       db.collection('tags').get(),
@@ -195,5 +215,46 @@ Page({
       })
       this.updateTodoList()
     })
-  }
+  },
+  // open & close dialog
+
+  more: function(e) {
+    wx.showActionSheet({
+      itemList: ['归档已完成的待办', '删除标签'],
+      success: res => {
+        if (res.tapIndex === 0) this.archiveTodo()
+        else this.deleteTag()
+      },
+      fail: res => console.log(res.errMsg)
+    })
+    this.setData({
+      selectedTag: e.currentTarget.id
+    })
+  },
+  addTodoItem: function(e) {
+    this.displayView('addTodoItem')
+    this.setData({
+      selectedTag: e.target.id
+    })
+  },
+  addTag: function(e) {
+    this.displayView('addTag')
+  },
+  displayView: function(string) {
+    wx.hideTabBar()
+    this.data.display[string] = true
+    this.setData({
+      display: this.data.display
+    })
+  },
+  hideView: function() {
+    wx.showTabBar()
+    this.setData({
+      display: {
+        addTodoItem: false,
+        addTag: false,
+      },
+    })
+  },
+
 })
