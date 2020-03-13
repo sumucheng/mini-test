@@ -1,9 +1,9 @@
 {
   "pages": [
-      "pages/index/index",
+   
     "pages/todos/todos",
-    "pages/completed/completed"
-  
+    "pages/completed/completed",
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -30,5 +30,8 @@
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json" 
+  "sitemapLocation": "sitemap.json" ,
+  "useExtendedLib": {
+    "weui": true
+  }
 }

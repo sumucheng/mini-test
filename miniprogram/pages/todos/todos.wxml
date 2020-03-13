@@ -9,10 +9,14 @@
     </view>
   </view>
   <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
-    <view class="toggleButton">
-      <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
-    </view>
-    <text>{{item.value}}</text>
+    <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap">
+      <view class="slideViewCell">
+        <view class="toggleButton">
+          <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
+        </view>
+        <text>{{item.value}}</text>
+      </view>
+    </mp-slideview>
   </view>
 </view>
 <button bindtap="addTag" class="addTagBtn">+</button>

@@ -17,9 +17,15 @@ Page({
       addTag: false
     },
     wacthTodoList: null,
-    watchTags: null
+    watchTags: null,
+    slideButtons: [{
+      text: '删除',
+      type: 'warn'
+    }]
   },
-
+  slideButtonTap(e) {
+    console.log('slide button tap', e)
+  },
   comfirmAddTodo: function(e) {
     const newTodo = {
       tag: this.data.selectedTag,
