@@ -43,15 +43,12 @@ Page({
     
   },
   getUserInfo: function(e) {
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
-  onGetOpenid: function() {
-    // 调用云函数
-
-  },
-
+    if(e.detail.userInfo){
+      app.globalData.userInfo = e.detail.userInfo
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      })
+    } 
+  }
 })

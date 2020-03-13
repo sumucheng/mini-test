@@ -1,8 +1,9 @@
 {
   "pages": [
+      "pages/index/index",
     "pages/todos/todos",
-    "pages/completed/completed",
-    "pages/index/index"
+    "pages/completed/completed"
+  
   ],
   "window": {
     "backgroundTextStyle": "light",
