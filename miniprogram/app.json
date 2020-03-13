@@ -21,6 +21,10 @@
       {
         "pagePath": "pages/completed/completed",
         "text": "归档"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的"
       }
     ]
   },

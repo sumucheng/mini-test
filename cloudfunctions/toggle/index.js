@@ -1,6 +1,9 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-cloud.init()
+cloud.init({
+  traceUser: true,
+  env: 'mini-todo-biumr'
+})
 const db = cloud.database()
 const _ = db.command
 

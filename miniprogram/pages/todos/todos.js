@@ -1,8 +1,11 @@
 import {
-  createId,
-  formatTime
+  formatTime,
+  initTodoList,
+  initTags
 } from '../../utils/util.js'
 const db = wx.cloud.database()
+const app = getApp()
+
 Page({
   data: {
     selectedTag: '',
@@ -93,16 +96,48 @@ Page({
   },
 
   onLoad: function(options) {
-    Promise.all([
-      db.collection('tags').get(),
-      db.collection('todoList').where({
-        archive: false
-      }).get()
-    ]).then(res => {
-      this.setData({
-        tags: res[0].data,
-        todoList: res[1].data,
-      })
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log(res)
+        if (res.result.data.length === 0) {
+          wx.cloud.callFunction({
+            name: "addUser",
+            data: {}
+          })
+          const initList = initTodoList()
+          for (let i of initList) {
+            db.collection('todoList').add({
+              data: i
+            })
+          }
+          const tags = initTags()
+          for (let i of tags) {
+            db.collection('tags').add({
+              data: {
+                name: i
+              }
+            })
+          }
+        } else {
+          Promise.all([
+              db.collection('tags').get(),
+              db.collection('todoList').where({
+                archive: false
+              }).get()
+            ])
+            .then(res => {
+              this.setData({
+                tags: res[0].data,
+                todoList: res[1].data,
+              })
+            })
+        }
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
     })
     this.setData({
       wacthTodoList: db.collection('todoList')
