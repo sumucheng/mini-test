@@ -1,8 +1,14 @@
+.wrapper {
+  min-height: 100vh;
+  background-color: #eaf2f3;
+}
+
 .tag {
-  border: 1rpx solid #eee;
   margin: 20rpx;
   overflow: hidden;
-  border-radius: 12rpx;
+  border-radius: 16rpx;
+  background: #eff5f6;
+  box-shadow: -10px -10px 20px 0 #fff, 10px 10px 20px 0 rgba(117, 132, 143, 0.10);
 }
 
 .tag > .tagTitle {

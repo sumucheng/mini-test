@@ -5,5 +5,7 @@
 }
 
 .header > .percentText {
-  padding-bottom: 20rpx;
+  padding-bottom: 16rpx;
+  font-family: PingFangSC-Regular;
+font-size: 16px;
 }

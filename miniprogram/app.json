@@ -1,13 +1,12 @@
 {
-  "pages": [
-   
+  "pages": [ 
     "pages/todos/todos",
     "pages/completed/completed",
     "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#EAF2F3",
     "navigationBarTitleText": "今日事",
     "navigationBarTextStyle": "black"
   },

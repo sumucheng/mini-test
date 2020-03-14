@@ -1,35 +1,29 @@
-<x-header></x-header>
+<view class="wrapper">
+  <x-header></x-header>
 
-<x-progress>
-</x-progress>
-<view wx:for="{{todoListByTag}}" wx:for-item="items" wx:key="tag" class="tag">
-  <view class="tagTitle">
-    <text>{{items.tag}}</text>
-    <view class="operation">
-      <view bindtap="addTodo" id="{{items.tag}}" class="addTodoItem">+</view>
-      <view bindtap="more" class="more" id="{{items.tag}}">···</view>
+  <x-progress>
+  </x-progress>
+  <view wx:for="{{todoListByTag}}" wx:for-item="items" wx:key="tag" class="tag">
+    <view class="tagTitle">
+      <text>{{items.tag}}</text>
+      <view class="operation">
+        <view bindtap="addTodo" id="{{items.tag}}" class="addTodoItem">+</view>
+        <view bindtap="more" class="more" id="{{items.tag}}">···</view>
+      </view>
+    </view>
+    <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
+      <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" id="{{item._id}}+{{item.value}}">
+        <view class="slideViewCell">
+          <view class="toggleButton">
+            <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
+          </view>
+          <text>{{item.value}}</text>
+        </view>
+      </mp-slideview>
     </view>
   </view>
-  <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
-    <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" id="{{item._id}}+{{item.value}}">
-      <view class="slideViewCell">
-        <view class="toggleButton">
-          <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
-        </view>
-        <text>{{item.value}}</text>
-      </view>
-    </mp-slideview>
+  <button bindtap="addTag" class="addTagBtn">+</button>
+  <view wx:if="{{displayDialog!==null}}">
+    <x-dialog headerText="{{dialogs[displayDialog].headerText}}" placeholder="{{dialogs[displayDialog].placeholder}}" bindconfirm="{{dialogs[displayDialog].handleConfirm}}" bindcancel="{{dialogs[displayDialog].handleCancel}}" value="{{dialogs[displayDialog].value}}"></x-dialog>
   </view>
-</view>
-<button bindtap="addTag" class="addTagBtn">+</button>
-<view wx:if="{{displayDialog!==null}}">
-  <x-dialog 
-  headerText="{{dialogs[displayDialog].headerText}}" 
-  placeholder="{{dialogs[displayDialog].placeholder}}" 
-  bindconfirm="{{dialogs[displayDialog].handleConfirm}}" 
-  bindcancel="{{dialogs[displayDialog].handleCancel}}"
-  value="{{dialogs[displayDialog].value}}"
-  >
-
-  </x-dialog>
 </view>
