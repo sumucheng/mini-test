@@ -27,10 +27,10 @@ Page({
         handleCancel: "hideView"
       },
       editTodo: {
-        headerText: '新增标签',
+        headerText: '编辑待办',
         placeholder: '待办名称',
-        handleConfirm: "comfirmAddTodo",
-        handleCancel: "hideView"
+        handleConfirm: "comfirmUpdateTodo",
+        handleCancel: "hideView",
       },
     },
     wacthTodoList: null,
@@ -44,9 +44,14 @@ Page({
   },
   slideButtonTap(e) {
     if (e.detail.index === 0) {
-      db.collection('todoList').doc(e.currentTarget.id).remove()
+      const x = e.currentTarget.id.split('+')
+      this.displayView('editTodo')
+      this.setData({
+        "dialogs.editTodo.value": x[1],
+        "dialogs.editTodo._id": x[0]
+      })
     } else {
-
+      db.collection('todoList').doc(x[0]).remove()
     }
   },
   comfirmAddTodo: function(e) {
@@ -62,7 +67,15 @@ Page({
     })
     this.hideView()
   },
-
+  comfirmUpdateTodo: function(e) {
+    console.log(e.detail)
+    db.collection('todoList').doc(this.data.dialogs.editTodo._id).update({
+      data: {
+        value:e.detail
+      }
+    })
+    this.hideView()
+  },
   comfirmAddTag: function(e) {
     if (this.data.tags.find(i => i.name === e.detail)) {
       wx.showModal({
@@ -241,7 +254,7 @@ Page({
   displayView: function(string) {
     wx.hideTabBar()
     this.setData({
-      displayDialog:string
+      displayDialog: string
     })
   },
   hideView: function() {
