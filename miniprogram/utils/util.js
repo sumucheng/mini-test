@@ -7,11 +7,17 @@ const formatTime = date => {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':') + ' 完成'
 }
 
-const formatTime2=date=>{
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const week=date.getDate()
-  return 
+const formatTime2 = date => {
+  const oneWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const oneYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  const month = oneYear[date.getMonth()]
+  const day = formatNumber(date.getDate())
+  const week = oneWeek[date.getDay()]
+  return {
+    month,
+    day,
+    week
+  }
 }
 
 const formatNumber = n => {
@@ -56,6 +62,7 @@ const initTodoList = () => {
 }
 export {
   formatTime,
+  formatTime2,
   initTodoList,
   initTags
 }

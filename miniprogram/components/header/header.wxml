@@ -1,2 +1,7 @@
 <!--components/header/header.wxml-->
-<text>components/header/header.wxml</text>
+<view>
+  <view class="date">
+    <view class="month">{{today.month}}</view>
+    <view class="day">{{today.week}} {{today.day}}</view>
+  </view>
+</view>

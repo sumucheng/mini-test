@@ -1,4 +1,7 @@
 // components/header/header.js
+import {
+  formatTime2
+} from '../../utils/util.js'
 Component({
 
   properties: {
@@ -6,19 +9,12 @@ Component({
   },
 
   data: {
-    today: new Date(),
-    month:"",
-    week:"",
-    day:""
+    today: formatTime2(new Date()),
   },
 
-  attached:function(){
-    const today=new Date()
-    this.setData({
-      month: today.getMonth()
-      })
+  attached: function() {
+    console.log(this.data.today)
   },
   methods: {
-
   }
 })
