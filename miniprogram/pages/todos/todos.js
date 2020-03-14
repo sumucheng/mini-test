@@ -12,20 +12,41 @@ Page({
     todoList: [],
     tags: [],
     todoListByTag: [],
-    display: {
-      addTodoItem: false,
-      addTag: false
+    displayDialog: null,
+    dialogs: {
+      addTodo: {
+        headerText: '新增待办',
+        placeholder: '待办名称',
+        handleConfirm: "comfirmAddTodo",
+        handleCancel: "hideView"
+      },
+      addTag: {
+        headerText: '新增待办',
+        placeholder: '标签名称',
+        handleConfirm: "comfirmAddTag",
+        handleCancel: "hideView"
+      },
+      editTodo: {
+        headerText: '新增标签',
+        placeholder: '待办名称',
+        handleConfirm: "comfirmAddTodo",
+        handleCancel: "hideView"
+      },
     },
     wacthTodoList: null,
     watchTags: null,
     slideButtons: [{
+      text: '编辑'
+    }, {
       text: '删除',
       type: 'warn'
     }]
   },
   slideButtonTap(e) {
-    if(e.detail.index===0){
+    if (e.detail.index === 0) {
       db.collection('todoList').doc(e.currentTarget.id).remove()
+    } else {
+
     }
   },
   comfirmAddTodo: function(e) {
@@ -70,8 +91,7 @@ Page({
             name: 'deleteTodos',
             data: {
               tag: selectedTag
-            },
-            fail: console.error
+            }
           })
         }
         this.hideView()
@@ -108,7 +128,6 @@ Page({
       name: 'login',
       data: {},
       success: res => {
-        console.log(res)
         if (res.result.data.length === 0) {
           wx.cloud.callFunction({
             name: "addUser",
@@ -210,8 +229,8 @@ Page({
       selectedTag: e.currentTarget.id
     })
   },
-  addTodoItem: function(e) {
-    this.displayView('addTodoItem')
+  addTodo: function(e) {
+    this.displayView('addTodo')
     this.setData({
       selectedTag: e.target.id
     })
@@ -221,18 +240,14 @@ Page({
   },
   displayView: function(string) {
     wx.hideTabBar()
-    this.data.display[string] = true
     this.setData({
-      display: this.data.display
+      displayDialog:string
     })
   },
   hideView: function() {
     wx.showTabBar()
     this.setData({
-      display: {
-        addTodoItem: false,
-        addTag: false,
-      }
+      displayDialog: null
     })
   }
 })

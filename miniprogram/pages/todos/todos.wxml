@@ -4,7 +4,7 @@
   <view class="tagTitle">
     <text>{{items.tag}}</text>
     <view class="operation">
-      <view bindtap="addTodoItem" id="{{items.tag}}" class="addTodoItem">+</view>
+      <view bindtap="addTodo" id="{{items.tag}}" class="addTodoItem">+</view>
       <view bindtap="more" class="more" id="{{items.tag}}">···</view>
     </view>
   </view>
@@ -20,7 +20,11 @@
   </view>
 </view>
 <button bindtap="addTag" class="addTagBtn">+</button>
-
-<x-dialog headerText="新增待办" placeholder="待办名称" visible="{{display.addTodoItem}}" bindconfirm="comfirmAddTodo" bindcancel="hideView"></x-dialog>
-
-<x-dialog headerText="新增标签" placeholder="标签名称" visible="{{display.addTag}}" bindconfirm="comfirmAddTag" bindcancel="hideView"></x-dialog>
+<view wx:if="{{displayDialog!==null}}">
+  <x-dialog 
+  headerText="{{dialogs[displayDialog].headerText}}" 
+  placeholder="{{dialogs[displayDialog].placeholder}}" 
+  bindconfirm="{{dialogs[displayDialog].handleConfirm}}" 
+  bindcancel="{{dialogs[displayDialog].handleCancel}}">
+  </x-dialog>
+</view>

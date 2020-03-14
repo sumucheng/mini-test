@@ -1,5 +1,5 @@
 <!--components/addTodoItem/addTodoItem.wxml-->
-<view wx:if="{{visible}}" catchtouchmove="catchTouchmove">
+<view catchtouchmove="catchTouchmove">
   <view class="wrapper">
     <view class="inner">
       <view class="header">{{headerText}}</view>
