@@ -13,19 +13,27 @@
   },
   "tabBar": {
     "color": "#aaa",
-    "selectedColor": "#333",
+    "selectedColor": "#00A5FE",
+    "backgroundColor":"#EFF5F6",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/todos/todos",
-        "text": "待办"
+        "text": "待办",
+        "iconPath":"./static/icon/todo-grey.png",
+        "selectedIconPath":"./static/icon/todo-blue.png"
       },
       {
         "pagePath": "pages/completed/completed",
-        "text": "归档"
+        "text": "归档",
+        "iconPath": "./static/icon/archive-grey.png",
+        "selectedIconPath": "./static/icon/archive-blue.png"
       },
       {
         "pagePath": "pages/index/index",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "./static/icon/my-grey.png",
+        "selectedIconPath": "./static/icon/my-blue.png"
       }
     ]
   },

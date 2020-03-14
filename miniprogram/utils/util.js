@@ -7,6 +7,13 @@ const formatTime = date => {
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':') + ' 完成'
 }
 
+const formatTime2=date=>{
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const week=date.getDate()
+  return 
+}
+
 const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n

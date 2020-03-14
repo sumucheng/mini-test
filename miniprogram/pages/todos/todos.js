@@ -43,15 +43,17 @@ Page({
     }]
   },
   slideButtonTap(e) {
+    const x = e.currentTarget.id.split('+')
+    const _id = x[0]
+    const value = x[1]
     if (e.detail.index === 0) {
-      const x = e.currentTarget.id.split('+')
       this.displayView('editTodo')
       this.setData({
-        "dialogs.editTodo.value": x[1],
-        "dialogs.editTodo._id": x[0]
+        "dialogs.editTodo.value": value,
+        "dialogs.editTodo._id": _id
       })
     } else {
-      db.collection('todoList').doc(x[0]).remove()
+      db.collection('todoList').doc(_id).remove()
     }
   },
   comfirmAddTodo: function(e) {
@@ -71,7 +73,7 @@ Page({
     console.log(e.detail)
     db.collection('todoList').doc(this.data.dialogs.editTodo._id).update({
       data: {
-        value:e.detail
+        value: e.detail
       }
     })
     this.hideView()
