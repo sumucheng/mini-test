@@ -24,7 +24,9 @@ Page({
     }]
   },
   slideButtonTap(e) {
-    console.log('slide button tap', e)
+    if(e.detail.index===0){
+      db.collection('todoList').doc(e.currentTarget.id).remove()
+    }
   },
   comfirmAddTodo: function(e) {
     const newTodo = {
