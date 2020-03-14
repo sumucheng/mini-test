@@ -1,6 +1,7 @@
 /* components/header/header.wxss */
 .date{
-  margin-left: 20px;
+  margin-left: 40rpx;
+  padding-top: 20rpx
 }
 .date > .month {
   font-family: DINCondensed-Bold;

@@ -7,8 +7,8 @@
     <view class="tagTitle">
       <text>{{items.tag}}</text>
       <view class="operation">
-        <view bindtap="addTodo" id="{{items.tag}}" class="addTodoItem">+</view>
-        <view bindtap="more" class="more" id="{{items.tag}}">···</view>
+        <view bindtap="addTodo" id="{{items.tag}}" class="addTodo btn">+</view>
+        <view bindtap="more" class="btn" id="{{items.tag}}">···</view>
       </view>
     </view>
     <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
