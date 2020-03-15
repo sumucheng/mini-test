@@ -21,7 +21,7 @@ Page({
         handleCancel: "hideView"
       },
       addTag: {
-        headerText: '新增待办',
+        headerText: '新增标签',
         placeholder: '标签名称',
         handleConfirm: "comfirmAddTag",
         handleCancel: "hideView"
@@ -30,8 +30,14 @@ Page({
         headerText: '编辑待办',
         placeholder: '待办名称',
         handleConfirm: "comfirmUpdateTodo",
-        handleCancel: "hideView",
+        handleCancel: "hideView"
       },
+      editTag: {
+        headerText: '编辑标签',
+        placeholder: '标签名称',
+        handleConfirm: "comfirmUpdateTag",
+        handleCancel: "hideView",
+      }
     },
     wacthTodoList: null,
     watchTags: null,
@@ -75,6 +81,18 @@ Page({
       data: {
         value: e.detail
       }
+    })
+    this.hideView()
+  },
+  comfirmUpdateTag: function(e) {
+    console.log(e.detail)
+    console.log(this.data.dialogs.editTag.value)
+    wx.cloud.callFunction({
+      name: 'editTag',
+      data: {
+        tag: this.data.dialogs.editTag.value,
+      },
+      fail: console.error
     })
     this.hideView()
   },
@@ -233,10 +251,15 @@ Page({
   // open & close dialog
   more: function(e) {
     wx.showActionSheet({
-      itemList: ['归档已完成的待办', '删除标签'],
+      itemList: ['归档已完成的待办', '编辑标签', '删除标签'],
       success: res => {
         if (res.tapIndex === 0) this.archiveTodo()
-        else this.deleteTag()
+        else if (res.tapIndex === 1) {
+          this.displayView('editTag')
+          this.setData({
+            "dialogs.editTag.value": e.currentTarget.id
+          })
+        } else this.deleteTag()
       },
       fail: res => console.log(res.errMsg)
     })
@@ -247,12 +270,13 @@ Page({
   addTodo: function(e) {
     this.displayView('addTodo')
     this.setData({
-      selectedTag: e.target.id
+      selectedTag: e.currentTarget.id
     })
   },
   addTag: function(e) {
     this.displayView('addTag')
   },
+
   displayView: function(string) {
     wx.hideTabBar()
     this.setData({

@@ -7,22 +7,32 @@
     <view class="tagTitle">
       <text>{{items.tag}}</text>
       <view class="operation">
-        <view bindtap="addTodo" id="{{items.tag}}" class="addTodo btn">+</view>
-        <view bindtap="more" class="btn" id="{{items.tag}}">···</view>
+        <view bindtap="addTodo" id="{{items.tag}}" class="addTodo btn">
+          <image src="../../static/icon/addTodo.png" style="height:30rpx;width:30rpx;"></image>
+        </view>
+        <view bindtap="more" class="btn" id="{{items.tag}}">
+          <image src="../../static/icon/more.png" style="height:30rpx;width:30rpx;"></image>
+        </view>
       </view>
     </view>
     <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
       <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" id="{{item._id}}+{{item.value}}">
         <view class="slideViewCell">
           <view class="toggleButton">
-            <icon wx:if="{{item.completed}}" type="success_no_circle" size="14"></icon>
+            <image wx:if="{{item.completed}}" src="../../static/icon/completed.png" style="height:100%;width:100%;"></image>
+            <image wx:else src="../../static/icon/uncompleted.png" style="height:100%;width:100%;"></image>
           </view>
           <text>{{item.value}}</text>
         </view>
       </mp-slideview>
     </view>
   </view>
-  <button bindtap="addTag" class="addTagBtn">+</button>
+  <view class="btnContainer">
+    <button class="addTagBtn" bindtap="addTag" plain="true" style="border:0;width:100%;padding:0;">
+      <image src="../../static/icon/addTag.png" style="height:100rpx;width:100%;"></image>
+    </button>
+  </view>
+
   <view wx:if="{{displayDialog!==null}}">
     <x-dialog headerText="{{dialogs[displayDialog].headerText}}" placeholder="{{dialogs[displayDialog].placeholder}}" bindconfirm="{{dialogs[displayDialog].handleConfirm}}" bindcancel="{{dialogs[displayDialog].handleCancel}}" value="{{dialogs[displayDialog].value}}"></x-dialog>
   </view>
