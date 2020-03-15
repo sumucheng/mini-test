@@ -1,16 +1,17 @@
 /* components/header/header.wxss */
-.date{
+
+.date {
   margin-left: 40rpx;
-  padding-top: 20rpx
-}
-.date > .month {
-  font-family: DINCondensed-Bold;
-  font-size: 40px;
-  color: #1d3041;
-  line-height: 1.2em;
+  padding-top: 30rpx;
 }
 
 .date > .day {
+  font-family: PingFangSC-Semibold;
+  font-size: 24px;
+  color: #1d3041;
+}
+
+.date > .year {
   font-family: PingFangSC-Regular;
   font-size: 15px;
   color: #697b8c;

@@ -1,19 +1,51 @@
 /* pages/completed/completed.wxss */
 
-.item {
-  border: 1rpx solid #eee;
-  margin: 20rpx;
-  border-radius: 12rpx;
-  overflow: hidden;
+.wrapper {
+  min-height: 100vh;
+  background-color: #eaf2f3;
+  box-sizing: border-box;
+  padding: 40rpx;
 }
 
-.title {
+.noDataText {
+  font-family: PingFangSC-Medium;
+  font-size: 15px;
+  color: #1d3041;
+  margin: 60rpx;
+}
+
+.item {
+  overflow: hidden;
+  background: #eff5f6;
+  box-shadow: -10px -10px 20px 0 #fff, 10px 10px 20px 0 rgba(117, 132, 143, 0.10);
+  border-radius: 20rpx;
   display: flex;
   justify-content: space-between;
-  background: #eee;
-  padding: 10rpx 30rpx;
+  align-items: center;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
 }
 
-.item > .text {
-  padding: 20rpx 30rpx;
+.item >.left>.text {
+  font-family: PingFangSC-Regular;
+  color: #1d3041;
+  line-height: 1.3em;
+}
+
+.item >.left>.date {
+  opacity: 0.3;
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  color: #1d3041;
+}
+
+.item .deleteBtn {
+  width: 60rpx;
+  height: 60rpx;
+  background: #eff5f6;
+  box-shadow: -10px -10px 20px 0 #fff, 10px 10px 20px 0 rgba(117, 132, 143, 0.10);
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

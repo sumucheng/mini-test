@@ -1,7 +1,7 @@
 <!--components/header/header.wxml-->
 <view>
   <view class="date">
-    <view class="month">{{today.month}}</view>
-    <view class="day">{{today.week}} {{today.day}}</view>
+    <view class="day">{{today.day}}</view>
+    <view class="year">{{today.year}}</view>
   </view>
 </view>

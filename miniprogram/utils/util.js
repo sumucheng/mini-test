@@ -4,19 +4,18 @@ const formatTime = date => {
   const day = date.getDate()
   const hour = date.getHours()
   const minute = date.getMinutes()
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':') + ' 完成'
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':') + ' 完成'
 }
 
 const formatTime2 = date => {
   const oneWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   const oneYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  const month = oneYear[date.getMonth()]
-  const day = formatNumber(date.getDate())
-  const week = oneWeek[date.getDay()]
+  const month = date.getMonth() + 1
+  const day = (date.getMonth() + 1) + '月' + date.getDate() + '日'
+  const year = date.getFullYear() + '年'
   return {
-    month,
     day,
-    week
+    year
   }
 }
 

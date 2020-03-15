@@ -1,13 +1,14 @@
 {
   "pages": [ 
-    "pages/todos/todos",
     "pages/completed/completed",
+    "pages/todos/todos",
+    
     "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#EAF2F3",
-    "navigationBarTitleText": "今日事",
+    "navigationBarTitleText": "Today Todo",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

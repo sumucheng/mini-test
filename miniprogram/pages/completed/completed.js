@@ -7,10 +7,7 @@ Page({
     watchList: null
   },
   deleteTodoItem: function(e) {
-    // this.setData({
-    //   list: this.data.list.filter(i => i._id !== e.target.id)
-    // })
-    db.collection('todoList').doc(e.target.id).remove()
+    db.collection('todoList').doc(e.currentTarget.id).remove()
   },
   onUnload: function() {
     this.data.watchList.close()
@@ -28,6 +25,9 @@ Page({
           onChange: snapshot => {
             this.setData({
               list: snapshot.docs
+            })
+            if(snapshot.docs.length===0) this.setData({
+              list:null
             })
           },
           onError: err => console.error(err)
