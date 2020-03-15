@@ -85,12 +85,11 @@ Page({
     this.hideView()
   },
   comfirmUpdateTag: function(e) {
-    console.log(e.detail)
-    console.log(this.data.dialogs.editTag.value)
     wx.cloud.callFunction({
       name: 'editTag',
       data: {
         tag: this.data.dialogs.editTag.value,
+        newName: e.detail
       },
       fail: console.error
     })

@@ -9,11 +9,13 @@ const _ = db.command
 
 // 云函数入口函数
 exports.main = async(event, context) => {
+  const wxContext = cloud.getWXContext()
   try {
     return await db.collection('todoList').where({
         tag: event.tag,
         completed: true,
-        archive: false
+        archive: false,
+        _openid: wxContext.OPENID
       })
       .update({
         data: {
@@ -23,4 +25,4 @@ exports.main = async(event, context) => {
   } catch (e) {
     console.error(e)
   }
-} 
+}
