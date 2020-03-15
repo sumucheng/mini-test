@@ -7,14 +7,14 @@ cloud.init({
 const db = cloud.database()
 const _ = db.command
 
-
 // 云函数入口函数
 exports.main = async(event, context) => {
-  // const wxContext = cloud.getWXContext()
+  const wxContext = cloud.getWXContext()
   try {
     return await db.collection('todoList').where({
       tag: event.tag,
-      archive: false
+      archive: false,
+      _openid: wxContext.OPENID
     }).remove()
   } catch (e) {
     console.error(e)
