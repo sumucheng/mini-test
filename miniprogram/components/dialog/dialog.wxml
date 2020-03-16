@@ -2,8 +2,13 @@
 <view catchtouchmove="catchTouchmove">
   <view class="wrapper">
     <view class="inner">
+      <view class="line"></view>
       <view class="header">{{headerText}}</view>
-      <input focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" placeholder="{{placeholder}}" bindconfirm="confirm"></input>
+      <input focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" placeholder="{{placeholder}}"></input>
+      <view class="buttons">
+        <view class="cancel" bindtap="cancel">取消</view>
+        <view class="confirm" bindtap="confirm">确定</view>
+      </view>
     </view>
   </view>
   <view class="op" bindtap="cancel"></view>

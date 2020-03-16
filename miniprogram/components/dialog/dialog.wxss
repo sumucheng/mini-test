@@ -22,20 +22,58 @@
 }
 
 .wrapper>.inner {
-  width: 70%;
-  background: white;
+  width: 500rpx;
   overflow: hidden;
-  border: 1rpx solid #ccc;
-  border-radius: 24rpx;
+  border-radius: 20rpx;
+  background: #eff5f6;
 }
-
+.wrapper  >.inner >.line{
+  width: 100%;
+  height: 5px;
+  background-image: linear-gradient(270deg, #12E9D1 0%, #00A4FF 100%);
+}
 .wrapper>.inner> .header {
-  background: #eee;
-  padding: 24rpx 40rpx;
+  padding: 28rpx 0;
   display: flex;
   justify-content: center;
+  font-family: PingFangSC-Medium;
+  font-size: 16px;
+  color: #1d3041;
+}
+.wrapper  >.inner >.line{
+  background-image: linear-gradient(270deg, #12E9D1 0%, #00A4FF 100%);
+}
+.wrapper  >.inner > input {
+  margin: 0rpx 24rpx;
+  background: #eff5f6;
+  border: 1px solid #fff;
+  box-shadow: inset 5px 5px 12px 0 rgba(117, 132, 143, 0.08), inset -5px -5px 12px 0 #fff;
+  border-radius: 20rpx;
+  height: 100rpx;
+  padding: 0 30rpx;
 }
 
-.wrapper  >.inner > input {
-  margin: 24rpx 40rpx;
+.wrapper  >.inner>.buttons {
+  background-color: #fff;
+  margin-top: 50rpx;
+  height: 90rpx;
+  display: flex;
+}
+
+.buttons .cancel {
+  font-family: PingFangSC-Medium;
+  color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.buttons .confirm {
+  font-family: PingFangSC-Medium;
+  color: #008bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
 }

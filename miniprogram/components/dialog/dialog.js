@@ -32,6 +32,7 @@ Component({
       } else this.triggerEvent('confirm', this.data.value.trim())
     },
     cancel: function() {
+      wx.hideKeyboard()
       this.triggerEvent('cancel')
     },
     watchValue(e) {

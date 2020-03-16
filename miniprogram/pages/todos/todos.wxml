@@ -36,5 +36,5 @@
   <view wx:if="{{displayDialog!==null}}">
     <x-dialog headerText="{{dialogs[displayDialog].headerText}}" placeholder="{{dialogs[displayDialog].placeholder}}" bindconfirm="{{dialogs[displayDialog].handleConfirm}}" bindcancel="{{dialogs[displayDialog].handleCancel}}" value="{{dialogs[displayDialog].value}}"></x-dialog>
   </view>
-   <image src="../../static/icon/tab.png" style="position:fixed;bottom:0;left:0;height:50rpx;width:100%;"></image>
+  <image src="../../static/icon/tab.png" style="position:fixed;bottom:0;left:0;height:50rpx;width:100%;"></image>
 </view>

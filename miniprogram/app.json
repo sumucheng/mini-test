@@ -1,8 +1,8 @@
 {
   "pages": [ 
-    "pages/completed/completed",
+   
     "pages/todos/todos",
-    
+    "pages/completed/completed",
     "pages/index/index"
   ],
   "window": {

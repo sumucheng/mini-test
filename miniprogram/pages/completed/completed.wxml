@@ -11,7 +11,7 @@
         <text class="date">{{item.completedTimeText}}</text>
       </view>
       <view class="deleteBtn">
-        <image bindtap="deleteTodoItem" id="{{item._id}}" src="../../static/icon/addTodo.png" style="height:30rpx;width:30rpx;"></image>
+        <image bindtap="deleteTodoItem" id="{{item._id}}" src="../../static/icon/delete.png" style="height:30rpx;width:30rpx;"></image>
       </view>
 
     </view>
