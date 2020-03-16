@@ -15,14 +15,17 @@
         </view>
       </view>
     </view>
-    <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}">
-      <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" id="{{item._id}}+{{item.value}}">
-        <view class="slideViewCell">
-          <view class="toggleButton">
-            <image wx:if="{{item.completed}}" src="../../static/icon/completed.png" style="height:100%;width:100%;"></image>
-            <image wx:else src="../../static/icon/uncompleted.png" style="height:100%;width:100%;"></image>
+    <!-- <view bindtap="toggle" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" class="todoItem {{item.completed&&'completed'}}" id="{{item._id}}+{{item.completed}}"> -->
+    <view class="slideWrapper" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" bindtap="toggle" id="{{item._id}}+{{item.completed}}">
+      <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" id="{{item._id}}+{{item.value}}" icon="true">
+        <view class="todoItem {{item.completed&&'completed'}}">
+          <view class="slideViewCell">
+            <view class="toggleButton">
+              <image wx:if="{{item.completed}}" src="../../static/icon/completed.png" style="height:100%;width:100%;"></image>
+              <image wx:else src="../../static/icon/uncompleted.png" style="height:100%;width:100%;"></image>
+            </view>
+            <text>{{item.value}}</text>
           </view>
-          <text>{{item.value}}</text>
         </view>
       </mp-slideview>
     </view>

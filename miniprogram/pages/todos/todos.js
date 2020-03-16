@@ -42,10 +42,11 @@ Page({
     wacthTodoList: null,
     watchTags: null,
     slideButtons: [{
-      text: '编辑'
+      text: '编辑',
+      src: "../../static/icon/edit.png"
     }, {
       text: '删除',
-      type: 'warn'
+      src: "../../static/icon/delete-red.png"
     }]
   },
   slideButtonTap(e) {

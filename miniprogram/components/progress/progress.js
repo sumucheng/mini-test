@@ -2,9 +2,8 @@
 const db = wx.cloud.database()
 Component({
   data: {
-    percentText: '',
     percent: 0,
-    wather: null
+    watcher: null
   },
   created: function() {
     this.setData({
@@ -15,8 +14,7 @@ Component({
           const all = snapshot.docs.length
           const completed = snapshot.docs.filter(i => i.completed).length
           this.setData({
-            percentText: completed + ' / ' + all,
-            percent: completed / all * 100
+            percent: Math.floor(completed / all * 100)
           })
         },
         onError: err => console.error(err)

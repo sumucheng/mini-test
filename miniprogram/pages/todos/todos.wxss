@@ -2,6 +2,7 @@
   min-height: 100vh;
   background-color: #eaf2f3;
   box-sizing: border-box;
+  padding-bottom: 60rpx;
 }
 
 .tag {
@@ -36,8 +37,10 @@
   justify-content: center;
   align-items: center;
 }
-
-.tag > .todoItem {
+.slideWrapper{
+  margin: 0 24rpx 20rpx 24rpx;
+}
+.tag  .todoItem {
   display: flex;
   height: 90rpx;
   align-items: center;
@@ -47,7 +50,7 @@
   box-shadow: inset 10rpx 10rpx 24rpx 0 rgba(117, 132, 143, 0.08),
                 inset -10rpx -10rpx 24rpx 0 #fff;
   border-radius: 20rpx;
-  margin: 0 24rpx 20rpx 24rpx;
+  
 }
 
 .todoItem .toggleButton {
@@ -56,9 +59,9 @@
   margin-right: 10px;
 }
 
-.todoItem.completed > text {
-  color: #ccc;
-}
+/* .todoItem.completed  text {
+  color: #999;
+} */
 
 .todoItem .slideViewCell {
   display: flex;
@@ -72,7 +75,7 @@
   align-items: center;
 }
 .btnContainer{
-  margin:0 40rpx;
+  margin: 40rpx;
 }
 .addTagBtn{
   height: 100rpx;
