@@ -1,18 +1,31 @@
 /**index.wxss**/
 
+.wrapper {
+  min-height: 100vh;
+  background-color: #eaf2f3;
+  box-sizing: border-box;
+}
+
 .userinfo {
   display: flex;
-  align-items: center;
-  height: 200rpx;
+  padding: 30rpx;
+  border-bottom: 1px solid #fff;
 }
 
 .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
-  margin: 20rpx;
   border-radius: 50%;
+  margin-right: 30rpx;
 }
 
 .userinfo-nickname {
-  color: #aaa;
+  font-size: 20px;
+}
+
+.list .cell {
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #fff;
 }

@@ -36,6 +36,13 @@ const initTodoList = () => {
       time: new Date(),
       archive: false
     },
+     {
+      tag: '点击右侧的 + 号可添加待办',
+      value: '左滑可编辑 / 删除待办',
+      completed: false,
+      time: new Date(),
+      archive: false
+    },
     {
       tag: '点击右侧的 + 号可添加待办',
       value: '完成的待办会在第二天自动归档',

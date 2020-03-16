@@ -1,6 +1,5 @@
 {
-  "pages": [ 
-   
+  "pages": [
     "pages/todos/todos",
     "pages/completed/completed",
     "pages/index/index"
@@ -14,14 +13,14 @@
   "tabBar": {
     "color": "#aaa",
     "selectedColor": "#00A5FE",
-    "backgroundColor":"#EFF5F6",
+    "backgroundColor": "#EFF5F6",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/todos/todos",
         "text": "待办",
-        "iconPath":"./static/icon/todo-grey.png",
-        "selectedIconPath":"./static/icon/todo-blue.png"
+        "iconPath": "./static/icon/todo-grey.png",
+        "selectedIconPath": "./static/icon/todo-blue.png"
       },
       {
         "pagePath": "pages/completed/completed",
@@ -38,7 +37,7 @@
     ]
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json" ,
+  "sitemapLocation": "sitemap.json",
   "useExtendedLib": {
     "weui": true
   }

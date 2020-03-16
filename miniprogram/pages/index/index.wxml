@@ -1,13 +1,18 @@
 <!--index.wxml-->
 
-<view class="userinfo">
-
-  <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-    获取头像昵称
-  </button>
-  <block wx:else>
+<view class="wrapper">
+  <view wx:if="{{!hasUserInfo && canIUse}}" class="userinfo">
+    <image class="userinfo-avatar" src="../../static/icon/avatar.jpg" mode="cover"></image>
+    <button style="align-self:center;" open-type="getUserInfo" bindgetuserinfo="getUserInfo"  >登录</button>
+  </view>
+  <view wx:else class="userinfo">
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-  </block>
-  <button open-type="contact" bindcontact="handleContact">问题反馈</button>
+  </view>
+  <view class="list">
+    <view class="cell contact">
+      <button open-type="contact" plain="true" bindcontact="handleContact" style="border:0px;text-align:start;width:100%;padding:8px 12px;">问题反馈</button>
+    </view>
+  </view>
+  <image src="../../static/icon/tab.png" style="position:fixed;bottom:0;left:0;height:50rpx;width:100%;"></image>
 </view>

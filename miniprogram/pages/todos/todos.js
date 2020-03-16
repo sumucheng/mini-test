@@ -77,7 +77,6 @@ Page({
     this.hideView()
   },
   comfirmUpdateTodo: function(e) {
-    console.log(e.detail)
     db.collection('todoList').doc(this.data.dialogs.editTodo._id).update({
       data: {
         value: e.detail
@@ -92,6 +91,7 @@ Page({
         tag: this.data.dialogs.editTag.value,
         newName: e.detail
       },
+      success: () => this.updateTodoList(),
       fail: console.error
     })
     this.hideView()
@@ -206,10 +206,12 @@ Page({
         })
         .watch({
           onChange: snapshot => {
+
             this.setData({
               todoList: snapshot.docs
             })
-            this.updateTodoList()
+            if (!(snapshot.docChanges[0].dataType === 'update' && 'tag' in snapshot.docChanges[0].updatedFields))
+              this.updateTodoList()
           },
           onError: err => console.error(err)
         }),
@@ -219,7 +221,8 @@ Page({
             this.setData({
               tags: snapshot.docs
             })
-            this.updateTodoList()
+            if (!(snapshot.docChanges[0].dataType === 'update'))
+              this.updateTodoList()
           },
           onError: err => console.error(err)
         })
