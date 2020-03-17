@@ -12,6 +12,7 @@ Page({
     todoList: [],
     tags: [],
     todoListByTag: [],
+    slideShow: '',
     displayDialog: null,
     dialogs: {
       addTodo: {
@@ -51,8 +52,11 @@ Page({
       src: "../../static/icon/delete-red.png"
     }]
   },
-  slideShow(e){
-    console.log(e)
+  slideShow(e) {
+    console.log(e.currentTarget.dataset.id)
+    this.setData({
+      slideShow: e.currentTarget.dataset.id
+    })
   },
   slideButtonTap(e) {
     const x = e.currentTarget.id.split('+')
