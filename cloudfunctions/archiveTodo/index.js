@@ -15,7 +15,8 @@ exports.main = async(event, context) => {
         tag: event.tag,
         completed: true,
         archive: false,
-        _openid: wxContext.OPENID
+        _openid: wxContext.OPENID,
+        reset: _.neq('每天')
       })
       .update({
         data: {

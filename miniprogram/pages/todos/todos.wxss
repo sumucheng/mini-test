@@ -37,9 +37,11 @@
   justify-content: center;
   align-items: center;
 }
-.slideWrapper{
+
+.slideWrapper {
   margin: 0 24rpx 20rpx 24rpx;
 }
+
 .tag  .todoItem {
   display: flex;
   height: 90rpx;
@@ -50,7 +52,6 @@
   box-shadow: inset 10rpx 10rpx 24rpx 0 rgba(117, 132, 143, 0.08),
                 inset -10rpx -10rpx 24rpx 0 #fff;
   border-radius: 20rpx;
-  
 }
 
 .todoItem .toggleButton {
@@ -69,15 +70,23 @@
   align-items: center;
 }
 
+.todoItem .slideViewCell .reset {
+  color: #999;
+  font-size: 12px;
+  margin-left: 4px;
+}
+
 .todoItem.completed  .toggleButton {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.btnContainer{
+
+.btnContainer {
   margin: 40rpx;
 }
-.addTagBtn{
+
+.addTagBtn {
   height: 100rpx;
-  border-radius:20rpx ;
+  border-radius: 20rpx;
 }

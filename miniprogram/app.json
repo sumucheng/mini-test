@@ -27,12 +27,6 @@
         "text": "归档",
         "iconPath": "./static/icon/archive-grey.png",
         "selectedIconPath": "./static/icon/archive-blue.png"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的",
-        "iconPath": "./static/icon/my-grey.png",
-        "selectedIconPath": "./static/icon/my-blue.png"
       }
     ]
   },

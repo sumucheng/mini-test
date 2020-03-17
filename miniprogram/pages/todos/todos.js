@@ -53,7 +53,6 @@ Page({
     }]
   },
   slideShow(e) {
-    console.log(e.currentTarget.dataset.id)
     this.setData({
       slideShow: e.currentTarget.dataset.id
     })
@@ -76,7 +75,6 @@ Page({
     }
   },
   confirmAddTodo: function(e) {
-    console.log(e)
     const newTodo = {
       tag: this.data.selectedTag,
       value: e.detail.value,

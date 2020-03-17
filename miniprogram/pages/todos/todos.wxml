@@ -24,6 +24,7 @@
               <image wx:else src="../../static/icon/uncompleted.png" style="height:100%;width:100%;"></image>
             </view>
             <text>{{item.value}}</text>
+            <text class="reset" wx:if="{{item.reset==='每天'}}">每天</text>
           </view>
         </view>
       </mp-slideview>

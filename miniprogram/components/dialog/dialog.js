@@ -15,9 +15,10 @@ Component({
   },
 
   ready: function(e) {
-    const dialog = this.data.dialog
+    let index = this.data.array.findIndex(i => i === this.data.dialog.reset)
+    if (index === -1) index = 0
     this.setData({
-      index: this.data.array.findIndex(i => i === this.data.dialog.reset)
+      index: index
     })
   },
   methods: {
@@ -28,7 +29,7 @@ Component({
     },
     confirm: function() {
       const dialog = this.data.dialog
-      if (dialog.value.trim() === '') {
+      if (!dialog.value || dialog.value && dialog.value.trim() === '') {
         wx.showModal({
           content: '名称不能为空',
           showCancel: false

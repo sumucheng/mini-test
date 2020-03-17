@@ -10,13 +10,14 @@ const _ = db.command
 exports.main = (event, context) => {
   try {
     db.collection('todoList').where({
-        completed: true,
-        archive: false,
-        reset: _.neq('每天')
+        reset: '每天',
+        archive: false
       })
       .update({
         data: {
-          archive: true
+          completed: false,
+          completedTime: null,
+          completedTimeText: null
         }
       })
   } catch (e) {
