@@ -17,26 +17,28 @@ Page({
       addTodo: {
         headerText: '新增待办',
         placeholder: '待办名称',
-        handleConfirm: "comfirmAddTodo",
-        handleCancel: "hideView"
+        handleConfirm: "confirmAddTodo",
+        handleCancel: "hideView",
+        extra: true
       },
       addTag: {
         headerText: '新增标签',
         placeholder: '标签名称',
-        handleConfirm: "comfirmAddTag",
+        handleConfirm: "confirmAddTag",
         handleCancel: "hideView"
       },
       editTodo: {
         headerText: '编辑待办',
         placeholder: '待办名称',
-        handleConfirm: "comfirmUpdateTodo",
-        handleCancel: "hideView"
+        handleConfirm: "confirmUpdateTodo",
+        handleCancel: "hideView",
+        extra: true
       },
       editTag: {
         headerText: '编辑标签',
         placeholder: '标签名称',
-        handleConfirm: "comfirmUpdateTag",
-        handleCancel: "hideView",
+        handleConfirm: "confirmUpdateTag",
+        handleCancel: "hideView"
       }
     },
     wacthTodoList: null,
@@ -49,24 +51,32 @@ Page({
       src: "../../static/icon/delete-red.png"
     }]
   },
+  slideShow(e){
+    console.log(e)
+  },
   slideButtonTap(e) {
     const x = e.currentTarget.id.split('+')
     const _id = x[0]
     const value = x[1]
+    const reset = x[2]
+
     if (e.detail.index === 0) {
       this.displayView('editTodo')
       this.setData({
         "dialogs.editTodo.value": value,
-        "dialogs.editTodo._id": _id
+        "dialogs.editTodo._id": _id,
+        "dialogs.editTodo.reset": reset
       })
     } else {
       db.collection('todoList').doc(_id).remove()
     }
   },
-  comfirmAddTodo: function(e) {
+  confirmAddTodo: function(e) {
+    console.log(e)
     const newTodo = {
       tag: this.data.selectedTag,
-      value: e.detail,
+      value: e.detail.value,
+      reset: e.detail.reset,
       completed: false,
       time: new Date(),
       archive: false
@@ -76,15 +86,16 @@ Page({
     })
     this.hideView()
   },
-  comfirmUpdateTodo: function(e) {
+  confirmUpdateTodo: function(e) {
     db.collection('todoList').doc(this.data.dialogs.editTodo._id).update({
       data: {
-        value: e.detail
+        value: e.detail.value,
+        reset: e.detail.reset
       }
     })
     this.hideView()
   },
-  comfirmUpdateTag: function(e) {
+  confirmUpdateTag: function(e) {
     wx.cloud.callFunction({
       name: 'editTag',
       data: {
@@ -96,7 +107,7 @@ Page({
     })
     this.hideView()
   },
-  comfirmAddTag: function(e) {
+  confirmAddTag: function(e) {
     if (this.data.tags.find(i => i.name === e.detail)) {
       wx.showModal({
         content: '标签名重复',

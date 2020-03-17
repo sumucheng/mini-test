@@ -1,35 +1,47 @@
 // components/addTodoItem/addTodoItem.js
 const app = getApp()
+const db = wx.cloud.database()
 Component({
   behaviors: [],
   properties: {
-    headerText: {
-      type: String,
-      value: ''
-    },
-    placeholder: {
-      type: String,
-      value: ''
-    },
-    value: {
-      type: String,
-      value: ''
+    dialog: {
+      type: Object,
+      value: {}
     }
   },
+  data: {
+    array: ['从不', '每天'],
+    index: 0
+  },
 
+  ready: function(e) {
+    const dialog = this.data.dialog
+    this.setData({
+      index: this.data.array.findIndex(i => i === this.data.dialog.reset)
+    })
+  },
   methods: {
+    bindPickerChange: function(e) {
+      this.setData({
+        index: e.detail.value
+      })
+    },
     confirm: function() {
-      if (this.data.value.trim() === '') {
+      const dialog = this.data.dialog
+      if (dialog.value.trim() === '') {
         wx.showModal({
           content: '名称不能为空',
           showCancel: false
         })
-      } else if (this.data.value.trim().length > 15) {
+      } else if (dialog.value.trim().length > 15) {
         wx.showModal({
           content: '名称长度不能超过15',
           showCancel: false
         })
-      } else this.triggerEvent('confirm', this.data.value.trim())
+      } else this.triggerEvent('confirm', {
+        value: dialog.value.trim(),
+        reset: this.data.array[this.data.index]
+      })
     },
     cancel: function() {
       wx.hideKeyboard()
@@ -37,7 +49,7 @@ Component({
     },
     watchValue(e) {
       this.setData({
-        value: e.detail.value
+        "dialog.value": e.detail.value
       })
     },
     catchTouchmove(e) {

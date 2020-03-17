@@ -27,11 +27,13 @@
   border-radius: 20rpx;
   background: #eff5f6;
 }
-.wrapper  >.inner >.line{
+
+.wrapper  >.inner >.line {
   width: 100%;
   height: 5px;
-  background-image: linear-gradient(270deg, #12E9D1 0%, #00A4FF 100%);
+  background-image: linear-gradient(270deg, #12e9d1 0%, #00a4ff 100%);
 }
+
 .wrapper>.inner> .header {
   padding: 28rpx 0;
   display: flex;
@@ -40,9 +42,11 @@
   font-size: 16px;
   color: #1d3041;
 }
-.wrapper  >.inner >.line{
-  background-image: linear-gradient(270deg, #12E9D1 0%, #00A4FF 100%);
+
+.wrapper  >.inner >.line {
+  background-image: linear-gradient(270deg, #12e9d1 0%, #00a4ff 100%);
 }
+
 .wrapper  >.inner > input {
   margin: 0rpx 24rpx;
   background: #eff5f6;
@@ -51,6 +55,14 @@
   border-radius: 20rpx;
   height: 100rpx;
   padding: 0 30rpx;
+}
+
+.wrapper  >.inner .picker {
+  margin: 16rpx 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #999;
 }
 
 .wrapper  >.inner>.buttons {

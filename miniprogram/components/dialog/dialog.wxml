@@ -3,8 +3,16 @@
   <view class="wrapper">
     <view class="inner">
       <view class="line"></view>
-      <view class="header">{{headerText}}</view>
-      <input focus="true" value="{{value}}" bindinput="watchValue" class="addTodoInput" placeholder="{{placeholder}}"></input>
+      <view class="header">{{dialog.headerText}}</view>
+      <input focus="true" value="{{dialog.value}}" bindinput="watchValue" class="addTodoInput" placeholder="{{dialog.placeholder}}"></input>
+      <view wx:if="{{dialog.extra}}">
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+          <view class="picker">
+            <text>重置</text>
+            <text>{{array[index]}}</text>
+          </view>
+        </picker>
+      </view>
       <view class="buttons">
         <view class="cancel" bindtap="cancel">取消</view>
         <view class="confirm" bindtap="confirm">确定</view>

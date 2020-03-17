@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="slideWrapper" wx:for="{{items.data}}" wx:for-item="item" wx:key="_id" bindtap="toggle" id="{{item._id}}+{{item.completed}}">
-      <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" id="{{item._id}}+{{item.value}}" icon="true">
+      <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" id="{{item._id}}+{{item.value}}+{{item.reset}}" icon="true" bindShow="slideShow">
         <view class="todoItem {{item.completed&&'completed'}}">
           <view class="slideViewCell">
             <view class="toggleButton">
@@ -36,7 +36,9 @@
   </view>
 
   <view wx:if="{{displayDialog!==null}}">
-    <x-dialog headerText="{{dialogs[displayDialog].headerText}}" placeholder="{{dialogs[displayDialog].placeholder}}" bindconfirm="{{dialogs[displayDialog].handleConfirm}}" bindcancel="{{dialogs[displayDialog].handleCancel}}" value="{{dialogs[displayDialog].value}}"></x-dialog>
+    <x-dialog dialog="{{dialogs[displayDialog]}}" headerText="{{dialogs[displayDialog].headerText}}" placeholder="{{dialogs[displayDialog].placeholder}}" bindconfirm="{{dialogs[displayDialog].handleConfirm}}" bindcancel="{{dialogs[displayDialog].handleCancel}}"
+      value="{{dialogs[displayDialog].value}}" extra="{{dialogs[displayDialog].extra}}" todoId="{{dialogs[displayDialog]._id}}">
+    </x-dialog>
   </view>
   <image src="../../static/icon/tab.png" style="position:fixed;bottom:0;left:0;height:50rpx;width:100%;"></image>
 </view>
