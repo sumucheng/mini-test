@@ -13,7 +13,7 @@
 .wrapper {
   position: fixed;
   z-index: 100;
-  top: 200px;
+  top:20%;
   width: 100%;
   margin: 0 auto;
   display: flex;

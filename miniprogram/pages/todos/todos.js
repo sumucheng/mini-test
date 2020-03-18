@@ -102,7 +102,7 @@ Page({
       name: 'editTag',
       data: {
         tag: this.data.dialogs.editTag.value,
-        newName: e.detail
+        newName: e.detail.value
       },
       success: () => this.updateTodoList(),
       fail: console.error
@@ -110,7 +110,8 @@ Page({
     this.hideView()
   },
   confirmAddTag: function(e) {
-    if (this.data.tags.find(i => i.name === e.detail)) {
+    const name = e.detail.value
+    if (this.data.tags.find(i => i.name === name)) {
       wx.showModal({
         content: '标签名重复',
         showCancel: false
@@ -119,7 +120,7 @@ Page({
     }
     db.collection('tags').add({
       data: {
-        name: e.detail
+        name: name
       }
     })
     this.hideView()
@@ -248,6 +249,11 @@ Page({
     this.setData({
       wacthTodoList: null,
       watchTags: null
+    })
+  },
+  onHide(){
+    this.setData({
+      slideShow: null
     })
   },
 
